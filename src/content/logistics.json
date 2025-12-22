@@ -1,0 +1,103 @@
+{
+  "pageTitle": "Logistical Planning: How are you going to host and promote the event?",
+  "items": [
+    {
+      "number": 1,
+      "title": "Decide when and where to host",
+      "description": [
+        "Choose a day and time that works for you, and book a room on campus that fits your expected number of guests.",
+        "If you will have 5+ guests, you'll want a room with a projector so not everyone is crowded around a laptop."
+      ],
+      "brainstormQuestion": "How big of a room will I need? What is a good time to host so that students will be available and can easily attend?",
+      "inputs": [
+        {
+          "id": "eventDateTime",
+          "label": "Date and time for your event",
+          "type": "datetime"
+        },
+        {
+          "id": "venue",
+          "label": "Place on campus to host the event",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Secure your fellow presenters",
+      "description": [
+        "It's easier and more comfortable to host an event with others.",
+        "Think about other people you know who are interested in AI and use ChatGPT responsibly who might have a use case they would want to share. Invite them to present with you."
+      ],
+      "brainstormQuestion": "Who else do you know that uses ChatGPT responsibly and would be excited to talk about their use?",
+      "inputs": [
+        {
+          "id": "presenterList",
+          "label": "People who might be interested in presenting",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Create a slideshow",
+      "description": [
+        "Events are easier to run when they are structured and have a clear flow.",
+        "It is best to create a slideshow.",
+        "Think about how you can introduce the flow of the event, give each presenter a slide, pose your guiding question, and add whatever else you want.",
+        "Consider using the template below to get started!"
+      ],
+      "inputs": [],
+      "templateButton": {
+        "label": "Download slide template",
+        "comingSoon": true
+      }
+    },
+    {
+      "number": 4,
+      "title": "Invite people & promote",
+      "description": [
+        "Use a tool like Lu.ma to build an event info and registration page.",
+        "Be sure to clearly explain the purpose, format, and what students will get out of it.",
+        "Include information about the 100 Chats project and you the host.",
+        "Start with personal connections: invite people you know, group chats you're a part of.",
+        "Then go wider: put up flyers, promote it at your club, and through normal campus channels."
+      ],
+      "brainstormQuestion": "How might you promote the event and what ways will be most effective?",
+      "inputs": [
+        {
+          "id": "promotionPlan",
+          "label": "How you are going to promote the event",
+          "type": "textarea"
+        }
+      ],
+      "templateButton": {
+        "label": "Download flyer template",
+        "comingSoon": true
+      }
+    },
+    {
+      "number": 5,
+      "title": "Plan the day-of logistics",
+      "description": [
+        "If you're expecting 10+ people, it's worth having one or two trusted friends by your side.",
+        "Extra hands make the event run more smoothly—and make hosting feel lighter.",
+        "You might need help with: setting up the room/projector, greeting people, keeping time during show-and-tells, taking notes/photos, and anything else that helps you capture what you learn.",
+        "Think about any supplies you might need too."
+      ],
+      "brainstormQuestion": "Would it be valuable to have some additional support and what materials might you need too?",
+      "inputs": [
+        {
+          "id": "supplies",
+          "label": "Supplies you might need to secure",
+          "type": "textarea"
+        },
+        {
+          "id": "helpers",
+          "label": "People you'll ask to help facilitate (optional)",
+          "type": "textarea"
+        }
+      ]
+    }
+  ]
+}

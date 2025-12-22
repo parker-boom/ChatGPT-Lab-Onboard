@@ -2,3 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar (optional, subtle) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4D4D4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A3A3A3;
+}

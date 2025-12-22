@@ -1,0 +1,31 @@
+{
+  "transitions": {
+    "afterConceptual": {
+      "title": "Nice — you've got the idea.",
+      "dialogue": [
+        "Alright, you've got the _shape_ of your Lab. That's the fun part.",
+        "Next we'll lock in logistics: date, presenters, slides, promotion, day-of details.",
+        "This part might take a couple weeks in real life — totally fine. You can come back anytime and everything will still be here."
+      ],
+      "ctaText": "Go to logistical planning"
+    },
+    "afterLogistics": {
+      "title": "Phew. Planning complete.",
+      "dialogue": [
+        "Okay… that was a lot.",
+        "But it was _way_ less chaotic than my last experiment, so we're good.",
+        "Next, we'll lay everything out in one clean planning doc you can download — and I'll give you a ChatGPT link so you can keep refining things with my buddy."
+      ],
+      "ctaText": "Review & download"
+    },
+    "outro": {
+      "title": "You're done. Go host something awesome.",
+      "dialogue": [
+        "That's it — you've got a planning doc, and you can ask ChatGPT for help anytime with your event.",
+        "Last thing: after you host, please fill out the form so the OpenAI team can credit you and share what you learned.",
+        "Alright. Go be the reason your campus has a smarter AI conversation."
+      ],
+      "ctaText": "Finish"
+    }
+  }
+}

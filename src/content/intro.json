@@ -1,0 +1,39 @@
+{
+  "slides": [
+    {
+      "title": "Welcome!",
+      "dialogue": [
+        "Hey! I'm **Beaker** — official ChatGPT Lab mascot and _self-appointed_ event planner.",
+        "I heard you're going to host a ChatGPT Lab on your campus. Congrats — that's literally my favorite thing.",
+        "I'll walk you through planning it step by step. We'll keep it simple, and you can come back anytime — we save your progress."
+      ]
+    },
+    {
+      "title": "What's a ChatGPT Lab?",
+      "dialogue": [
+        "A ChatGPT Lab is a **one-hour, peer-led, show-and-tell** event where students share how they're using AI.",
+        "The goal isn't to 'teach' everyone AI. It's to explore with curiosity and leave with an **'I wonder if…'** and the confidence to try something new."
+      ]
+    },
+    {
+      "title": "What do I get as a host?",
+      "dialogue": [
+        "You'll get support and resources to run a great event.",
+        "Typically, OpenAI provides things like **100 Chats books** to help start the conversation.",
+        "And you'll be part of the host community — basically a **campus ambassador** for bringing the Lab to your school.",
+        "Your event can also get highlighted back to the broader Lab community."
+      ]
+    },
+    {
+      "title": "Here's the plan",
+      "dialogue": [
+        "We'll do this in three parts:",
+        "1) **Conceptual planning** — decide what kind of Lab you're running.",
+        "2) **Logistical planning** — lock in the details so you can actually host it.",
+        "3) **Summary** — we'll generate a clean planning doc and a ChatGPT link so you can keep working on it.",
+        "Ready? Let's make a Lab worth showing up to."
+      ],
+      "ctaText": "Start planning"
+    }
+  ]
+}
