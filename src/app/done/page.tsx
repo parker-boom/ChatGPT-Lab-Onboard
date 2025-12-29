@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { updateProgress, getEventData } from "@/lib/storage";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { updateProgress, getEventData } from '@/lib/storage';
 
 interface TimeLeft {
   days: number;
@@ -31,7 +31,7 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
     <div className="flex flex-col items-center">
       <div className="w-36 h-36 bg-lab-white rounded-card shadow-card flex items-center justify-center mb-3">
         <span className="text-[5rem] font-black text-lab-black tabular-nums">
-          {String(value).padStart(2, "0")}
+          {String(value).padStart(2, '0')}
         </span>
       </div>
       <span className="text-[1rem] font-semibold text-lab-gray-500 uppercase tracking-wide">
@@ -48,7 +48,7 @@ export default function DonePage() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    updateProgress({ currentPage: "done" });
+    updateProgress({ currentPage: 'done' });
     const data = getEventData();
     const dateTime = data.logistics.eventDateTime;
     setEventDateTime(dateTime || null);
@@ -70,13 +70,13 @@ export default function DonePage() {
   }, [eventDateTime]);
 
   const handleBackToStart = () => {
-    updateProgress({ currentPage: "intro", introSlideIndex: 0 });
-    router.push("/intro");
+    updateProgress({ currentPage: 'intro', introSlideIndex: 0 });
+    router.push('/intro');
   };
 
   const handleEditPlan = () => {
-    updateProgress({ currentPage: "summary" });
-    router.push("/summary");
+    updateProgress({ currentPage: 'summary' });
+    router.push('/summary');
   };
 
   if (!isLoaded) {
@@ -108,12 +108,12 @@ export default function DonePage() {
               🎉 Hope it went great!
             </h1>
             <p className="text-[1.25rem] text-lab-gray-600 mb-10">
-              Your event was scheduled for{" "}
-              {eventDate?.toLocaleDateString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
+              Your event was scheduled for{' '}
+              {eventDate?.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
               })}
               . Don&apos;t forget to fill out the host form!
             </p>

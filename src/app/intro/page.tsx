@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import introContent from '@/content/intro.json';
 import { getProgress, updateProgress } from '@/lib/storage';
+import { BeakerLayout } from '@/components/BeakerLayout';
+import { usePreloadImages } from '@/hooks/usePreloadImages';
 
 export default function IntroPage() {
   const router = useRouter();
@@ -14,6 +15,9 @@ export default function IntroPage() {
   const slides = introContent.slides;
   const currentSlide = slides[slideIndex];
   const isLastSlide = slideIndex === slides.length - 1;
+
+  // Preload all Beaker images on first page load
+  usePreloadImages();
 
   // Load saved slide index on mount
   useEffect(() => {
@@ -54,42 +58,18 @@ export default function IntroPage() {
     <main className="min-h-screen flex flex-col p-8">
       {/* Main content - centered */}
       <div className="flex-1 flex items-center justify-center">
-        <div className="flex gap-8 items-stretch">
-          <div className="h-[460px] w-[307px] flex-shrink-0 bg-lab-white/90 backdrop-blur-sm rounded-card shadow-card overflow-hidden">
-            <Image
-              src="/assets/SmileyFace.png"
-              alt="Beaker"
-              width={307}
-              height={460}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="h-[460px] w-[560px] flex-shrink-0 card p-8 flex flex-col">
-            <h1 className="text-heading text-lab-black mb-6 text-balance">
-              {currentSlide.title}
-            </h1>
-            
-            <div className="space-y-4">
-              {currentSlide.dialogue.map((line, i) => (
-                <p 
-                  key={i} 
-                  className="text-[1.2rem] text-lab-gray-700 leading-relaxed" 
-                  dangerouslySetInnerHTML={{ 
-                    __html: line
-                      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-lab-black font-semibold">$1</strong>')
-                      .replace(/_(.*?)_/g, '<em>$1</em>')
-                  }} 
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+        <BeakerLayout
+          title={currentSlide.title}
+          dialogue={currentSlide.dialogue}
+        />
       </div>
 
       {/* Bottom navigation - fixed at bottom */}
       <div className="flex flex-col items-center gap-3 pb-4">
-        <button onClick={handleNext} className="px-10 py-4 bg-lab-black text-lab-white text-lg font-medium rounded-button hover:bg-lab-gray-800 active:scale-[0.98] transition-all">
+        <button
+          onClick={handleNext}
+          className="px-10 py-4 bg-lab-black text-lab-white text-lg font-medium rounded-button hover:bg-lab-gray-800 active:scale-[0.98] transition-all"
+        >
           {isLastSlide ? (currentSlide.ctaText || 'Continue') : 'Next'}
         </button>
         <button

@@ -1,92 +1,61 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import beakerContent from "@/content/beaker.json";
-import { updateProgress, getEventData } from "@/lib/storage";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import beakerContent from '@/content/beaker.json';
+import { updateProgress, getEventData } from '@/lib/storage';
+import { BeakerLayout } from '@/components/BeakerLayout';
 
 export default function OutroPage() {
   const router = useRouter();
   const transition = beakerContent.transitions.outro;
-  const [eventData, setEventDataState] = useState<{ eventDateTime: string } | null>(null);
 
   useEffect(() => {
-    updateProgress({ currentPage: "outro" });
-    const data = getEventData();
-    setEventDataState({ eventDateTime: data.logistics.eventDateTime });
+    updateProgress({ currentPage: 'outro' });
   }, []);
 
   const handleFinish = () => {
-    updateProgress({ currentPage: "done" });
-    router.push("/done");
+    updateProgress({ currentPage: 'done' });
+    router.push('/done');
   };
 
   const handleDownloadPDF = () => {
-    // TODO: Implement PDF generation in Phase 5
-    alert("PDF download coming soon!");
+    // PDF generation will be implemented in a future phase
+    alert('PDF download coming soon!');
   };
 
   const handleChatGPT = () => {
     const data = getEventData();
     const message = `Hey ChatGPT — I'm planning a ChatGPT Lab on my campus. Here are the details:
 
-Community: ${data.conceptual.hostGroup || "[Not set]"}
-Theme: ${data.conceptual.theme || "[Not set]"}
-Date & Time: ${data.logistics.eventDateTime || "[Not set]"}
-Venue: ${data.logistics.venue || "[Not set]"}
-My Use Case: ${data.conceptual.yourUseCase || "[Not set]"}
-Other Presenters: ${data.conceptual.potentialPresenters || "[Not set]"}
-Promotion Plan: ${data.logistics.promotionPlan || "[Not set]"}
-Day-of Supplies: ${data.logistics.supplies || "[Not set]"}
-Day-of Helpers: ${data.logistics.helpers || "[Not set]"}
-Post-Event Sharing Plan: ${data.conceptual.sharingPlan || "[Not set]"}
+Community: ${data.conceptual.hostGroup || '[Not set]'}
+Theme: ${data.conceptual.theme || '[Not set]'}
+Date & Time: ${data.logistics.eventDateTime || '[Not set]'}
+Venue: ${data.logistics.venue || '[Not set]'}
+My Use Case: ${data.conceptual.yourUseCase || '[Not set]'}
+Other Presenters: ${data.conceptual.potentialPresenters || '[Not set]'}
+Guiding Question: ${data.conceptual.guidingQuestion || '[Not set]'}
+Promotion Plan: ${data.logistics.promotionPlan || '[Not set]'}
+Day-of Supplies: ${data.logistics.supplies || '[Not set]'}
+Day-of Helpers: ${data.logistics.helpers || '[Not set]'}
+Post-Event Sharing Plan: ${data.conceptual.sharingPlan || '[Not set]'}
 
 1) Confirm you understand the plan.
 2) Summarize the plan in a few sentences.
 3) Be ready to help me refine anything: presenters, promo, run-of-show, discussion question, follow-up recap.`;
 
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://chat.openai.com/?q=${encodedMessage}`, "_blank");
+    window.open(`https://chat.openai.com/?q=${encodedMessage}`, '_blank');
   };
 
   return (
     <main className="min-h-screen flex flex-col p-8">
       <div className="flex-1 flex items-center justify-center">
-        <div className="flex gap-8 items-stretch">
-          <div className="h-[460px] w-[307px] flex-shrink-0 bg-lab-white/90 backdrop-blur-sm rounded-card shadow-card overflow-hidden">
-            <Image
-              src="/assets/SmileyFace.png"
-              alt="Beaker"
-              width={307}
-              height={460}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="h-[460px] w-[560px] flex-shrink-0 card p-8 flex flex-col">
-            <h1 className="text-heading text-lab-black mb-6 text-balance">
-              {transition.title}
-            </h1>
-
-            <div className="space-y-4 mb-8">
-              {transition.dialogue.map((line, i) => (
-                <p
-                  key={i}
-                  className="text-[1.2rem] text-lab-gray-700 leading-relaxed"
-                  dangerouslySetInnerHTML={{
-                    __html: line
-                      .replace(
-                        /\*\*(.*?)\*\*/g,
-                        '<strong class="text-lab-black font-semibold">$1</strong>'
-                      )
-                      .replace(/_(.*?)_/g, "<em>$1</em>"),
-                  }}
-                />
-              ))}
-            </div>
-
-            <div className="flex gap-3 mt-auto">
+        <BeakerLayout
+          title={transition.title}
+          dialogue={transition.dialogue}
+          actions={
+            <div className="flex gap-3">
               <button
                 onClick={handleDownloadPDF}
                 className="flex-1 flex items-center justify-center gap-3 px-5 py-5 bg-lab-gray-100 hover:bg-lab-gray-200 text-lab-black font-semibold rounded-button transition-colors"
@@ -106,8 +75,8 @@ Post-Event Sharing Plan: ${data.conceptual.sharingPlan || "[Not set]"}
                 {transition.chatButtonText}
               </button>
             </div>
-          </div>
-        </div>
+          }
+        />
       </div>
 
       <div className="flex flex-col items-center gap-3 pb-4">

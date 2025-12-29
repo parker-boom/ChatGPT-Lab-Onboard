@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { EventData } from "@/lib/types";
-import { getEventData, setEventData, updateProgress } from "@/lib/storage";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { EventData } from '@/lib/types';
+import { getEventData, setEventData, updateProgress } from '@/lib/storage';
 
 interface FieldProps {
   label: string;
@@ -18,7 +18,7 @@ function Field({ label, value, onChange, multiline, type, half }: FieldProps) {
   const isEmpty = !value;
 
   return (
-    <div className={half ? "flex-1" : "w-full"}>
+    <div className={half ? 'flex-1' : 'w-full'}>
       <label className="block text-[0.8rem] font-semibold text-lab-gray-500 uppercase tracking-wide mb-1.5">
         {label}
       </label>
@@ -34,11 +34,11 @@ function Field({ label, value, onChange, multiline, type, half }: FieldProps) {
             transition-all duration-200
             focus:border-lab-yellow-400 focus:outline-none
             resize-none
-            ${isEmpty ? "text-lab-gray-400 italic" : "text-lab-black"}
+            ${isEmpty ? 'text-lab-gray-400 italic' : 'text-lab-black'}
           `}
           rows={3}
         />
-      ) : type === "datetime" ? (
+      ) : type === 'datetime' ? (
         <input
           type="datetime-local"
           value={value}
@@ -49,7 +49,7 @@ function Field({ label, value, onChange, multiline, type, half }: FieldProps) {
             text-[1rem]
             transition-all duration-200
             focus:border-lab-yellow-400 focus:outline-none
-            ${isEmpty ? "text-lab-gray-400" : "text-lab-black"}
+            ${isEmpty ? 'text-lab-gray-400' : 'text-lab-black'}
           `}
         />
       ) : (
@@ -64,7 +64,7 @@ function Field({ label, value, onChange, multiline, type, half }: FieldProps) {
             text-[1rem]
             transition-all duration-200
             focus:border-lab-yellow-400 focus:outline-none
-            ${isEmpty ? "text-lab-gray-400 italic" : "text-lab-black"}
+            ${isEmpty ? 'text-lab-gray-400 italic' : 'text-lab-black'}
           `}
         />
       )}
@@ -80,12 +80,12 @@ export default function SummaryPage() {
   useEffect(() => {
     const eventData = getEventData();
     setData(eventData);
-    updateProgress({ currentPage: "summary" });
+    updateProgress({ currentPage: 'summary' });
     setIsLoaded(true);
   }, []);
 
   const handleChange = (
-    section: "conceptual" | "logistics",
+    section: 'conceptual' | 'logistics',
     key: string,
     value: string
   ) => {
@@ -99,8 +99,8 @@ export default function SummaryPage() {
   };
 
   const handleContinue = () => {
-    updateProgress({ currentPage: "outro" });
-    router.push("/outro");
+    updateProgress({ currentPage: 'outro' });
+    router.push('/outro');
   };
 
   if (!isLoaded || !data) {
@@ -125,13 +125,13 @@ export default function SummaryPage() {
               <Field
                 label="Community"
                 value={data.conceptual.hostGroup}
-                onChange={(v) => handleChange("conceptual", "hostGroup", v)}
+                onChange={(v) => handleChange('conceptual', 'hostGroup', v)}
                 half
               />
               <Field
                 label="Theme"
                 value={data.conceptual.theme}
-                onChange={(v) => handleChange("conceptual", "theme", v)}
+                onChange={(v) => handleChange('conceptual', 'theme', v)}
                 half
               />
             </div>
@@ -140,14 +140,14 @@ export default function SummaryPage() {
               <Field
                 label="Date & Time"
                 value={data.logistics.eventDateTime}
-                onChange={(v) => handleChange("logistics", "eventDateTime", v)}
+                onChange={(v) => handleChange('logistics', 'eventDateTime', v)}
                 type="datetime"
                 half
               />
               <Field
                 label="Venue"
                 value={data.logistics.venue}
-                onChange={(v) => handleChange("logistics", "venue", v)}
+                onChange={(v) => handleChange('logistics', 'venue', v)}
                 half
               />
             </div>
@@ -156,16 +156,22 @@ export default function SummaryPage() {
               <Field
                 label="My Use Case"
                 value={data.conceptual.yourUseCase}
-                onChange={(v) => handleChange("conceptual", "yourUseCase", v)}
+                onChange={(v) => handleChange('conceptual', 'yourUseCase', v)}
               />
             </div>
+
+            <Field
+              label="Guiding Question"
+              value={data.conceptual.guidingQuestion}
+              onChange={(v) => handleChange('conceptual', 'guidingQuestion', v)}
+            />
 
             <div className="flex gap-4">
               <Field
                 label="Other Presenters"
                 value={data.conceptual.potentialPresenters}
                 onChange={(v) =>
-                  handleChange("conceptual", "potentialPresenters", v)
+                  handleChange('conceptual', 'potentialPresenters', v)
                 }
                 multiline
                 half
@@ -173,7 +179,7 @@ export default function SummaryPage() {
               <Field
                 label="Promotion Plan"
                 value={data.logistics.promotionPlan}
-                onChange={(v) => handleChange("logistics", "promotionPlan", v)}
+                onChange={(v) => handleChange('logistics', 'promotionPlan', v)}
                 multiline
                 half
               />
@@ -183,14 +189,14 @@ export default function SummaryPage() {
               <Field
                 label="Day-of Supplies"
                 value={data.logistics.supplies}
-                onChange={(v) => handleChange("logistics", "supplies", v)}
+                onChange={(v) => handleChange('logistics', 'supplies', v)}
                 multiline
                 half
               />
               <Field
                 label="Day-of Helpers"
                 value={data.logistics.helpers}
-                onChange={(v) => handleChange("logistics", "helpers", v)}
+                onChange={(v) => handleChange('logistics', 'helpers', v)}
                 multiline
                 half
               />
@@ -200,7 +206,7 @@ export default function SummaryPage() {
               <Field
                 label="Post-Event Sharing Plan"
                 value={data.conceptual.sharingPlan}
-                onChange={(v) => handleChange("conceptual", "sharingPlan", v)}
+                onChange={(v) => handleChange('conceptual', 'sharingPlan', v)}
                 multiline
               />
             </div>
