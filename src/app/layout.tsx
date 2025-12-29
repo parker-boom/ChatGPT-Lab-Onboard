@@ -2,7 +2,11 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: 'ChatGPT Lab - Host Guide',
@@ -15,14 +19,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-lab-yellow-50 text-lab-black antialiased`}>
+    <html lang="en" className={inter.variable}>
+      <body className={`${inter.className} antialiased`}>
+        {/* Background layer */}
+        <div 
+          className="fixed inset-0 -z-10"
+          style={{
+            backgroundImage: 'url(/assets/Background.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          {/* Blur + yellow tint overlay */}
+          <div className="absolute inset-0 backdrop-blur-bg bg-lab-yellow-50/40" />
+        </div>
+        
         {/* Mobile gate - shown only on small screens */}
         <div className="lg:hidden fixed inset-0 z-50 flex items-center justify-center bg-lab-yellow p-8">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Please view on desktop</h1>
-            <p className="text-lab-gray-700">
-              This planning tool is designed for desktop browsers.
+          <div className="text-center max-w-sm">
+            <div className="w-16 h-16 bg-lab-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-card">
+              <span className="text-2xl">💻</span>
+            </div>
+            <h1 className="text-heading text-lab-black mb-3">Desktop Required</h1>
+            <p className="text-body text-lab-gray-600">
+              This planning tool works best on a larger screen. Please visit on a desktop or laptop.
             </p>
           </div>
         </div>

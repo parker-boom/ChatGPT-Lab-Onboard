@@ -10,10 +10,10 @@ const config: Config = {
         // Primary brand yellow
         'lab-yellow': {
           DEFAULT: '#F9F871',
-          50: '#FEFEF5',
-          100: '#FDFDE8',
-          200: '#FCFCCE',
-          300: '#FAFAA3',
+          50: '#FFFEF5',
+          100: '#FEFDE8',
+          200: '#FDFBCE',
+          300: '#FBF8A3',
           400: '#F9F871',
           500: '#F5F330',
           600: '#D9D60E',
@@ -21,7 +21,7 @@ const config: Config = {
           800: '#717007',
           900: '#3D3C04',
         },
-        // Neutral palette for UI
+        // Neutral palette
         'lab-black': '#1A1A1A',
         'lab-white': '#FFFFFF',
         'lab-gray': {
@@ -36,27 +36,42 @@ const config: Config = {
           800: '#262626',
           900: '#171717',
         },
-        // Success state for checkmarks
+        // Status colors
         'lab-green': '#22C55E',
       },
       fontFamily: {
-        // Clean, modern sans-serif
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      fontSize: {
+        // Refined type scale
+        'display': ['2.5rem', { lineHeight: '1.1', fontWeight: '700' }],
+        'heading': ['1.75rem', { lineHeight: '1.2', fontWeight: '600' }],
+        'subheading': ['1.25rem', { lineHeight: '1.4', fontWeight: '600' }],
+        'body': ['1rem', { lineHeight: '1.6', fontWeight: '400' }],
+        'body-sm': ['0.9375rem', { lineHeight: '1.6', fontWeight: '400' }],
+        'caption': ['0.8125rem', { lineHeight: '1.5', fontWeight: '400' }],
       },
       borderRadius: {
-        // Flow moments: more rounded
         'flow': '1.5rem',
-        // Checklist/modal: more square
-        'checklist': '0.5rem',
+        'card': '1rem',
+        'button': '0.5rem',
       },
       boxShadow: {
-        'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
-        'modal': '0 8px 40px rgba(0, 0, 0, 0.12)',
+        'card': '0 4px 24px rgba(0, 0, 0, 0.06)',
+        'card-hover': '0 8px 32px rgba(0, 0, 0, 0.08)',
+        'modal': '0 16px 64px rgba(0, 0, 0, 0.16)',
       },
       spacing: {
-        // Consistent content widths
-        'content': '60%',
-        'content-wide': '80%',
+        '18': '4.5rem',
+        '22': '5.5rem',
+      },
+      maxWidth: {
+        'content': '640px',
+        'content-wide': '720px',
+        'flow': '800px',
+      },
+      backdropBlur: {
+        'bg': '60px',
       },
     },
   },

@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import beakerContent from '@/content/beaker.json';
 import { updateProgress } from '@/lib/storage';
 
@@ -20,35 +21,56 @@ export default function ConceptualCompletePage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center p-8">
-      <div className="max-w-3xl w-full">
+      <div className="max-w-flow w-full">
         {/* Beaker + Speech layout */}
-        <div className="flex gap-8 items-start">
-          {/* Beaker placeholder */}
-          <div className="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
-            <span className="text-4xl">🧪</span>
+        <div className="flex gap-10 items-center">
+          {/* Beaker */}
+          <div className="flex-shrink-0">
+            <div className="w-36 h-36 bg-lab-white rounded-full shadow-card flex items-center justify-center overflow-hidden">
+              <Image
+                src="/assets/SmileyFace.png"
+                alt="Beaker"
+                width={120}
+                height={120}
+                className="object-contain"
+              />
+            </div>
           </div>
 
           {/* Speech card */}
-          <div className="flex-1 bg-white p-6 rounded-lg shadow">
-            <h1 className="text-2xl font-bold mb-4">{transition.title}</h1>
+          <div className="flex-1 card p-8">
+            {/* Success badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-lab-green/10 text-lab-green rounded-full mb-4">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span className="text-caption font-medium">Stage 1 complete</span>
+            </div>
+
+            {/* Title */}
+            <h1 className="text-heading text-lab-black mb-6 text-balance">
+              {transition.title}
+            </h1>
             
-            <div className="space-y-3">
+            {/* Dialogue */}
+            <div className="space-y-4">
               {transition.dialogue.map((line, i) => (
-                <p key={i} className="text-gray-700" dangerouslySetInnerHTML={{ 
-                  __html: line
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/_(.*?)_/g, '<em>$1</em>')
-                }} />
+                <p 
+                  key={i} 
+                  className="text-body text-lab-gray-700 leading-relaxed" 
+                  dangerouslySetInnerHTML={{ 
+                    __html: line
+                      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-lab-black font-semibold">$1</strong>')
+                      .replace(/_(.*?)_/g, '<em>$1</em>')
+                  }} 
+                />
               ))}
             </div>
 
             {/* CTA */}
-            <div className="flex justify-end mt-6 pt-4 border-t">
-              <button
-                onClick={handleContinue}
-                className="px-6 py-2 bg-black text-white rounded"
-              >
-                {transition.ctaText} →
+            <div className="flex justify-end mt-8 pt-6 border-t border-lab-gray-100">
+              <button onClick={handleContinue} className="btn-primary">
+                {transition.ctaText}
               </button>
             </div>
           </div>

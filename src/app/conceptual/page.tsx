@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import conceptualContent from '@/content/conceptual.json';
 import { ChecklistItem } from '@/components/ChecklistItem';
 import { ChecklistModal } from '@/components/ChecklistModal';
-import { ChecklistItem as ChecklistItemType, ChecklistProgress } from '@/lib/types';
+import { ChecklistItem as ChecklistItemType, ChecklistProgress, ConceptualData } from '@/lib/types';
 import { 
   getProgress, 
   updateProgress, 
@@ -14,9 +14,7 @@ import {
   updateChecklistItem,
   isChecklistComplete 
 } from '@/lib/storage';
-import { ConceptualData } from '@/lib/types';
 
-// Map item numbers to checklist keys
 const itemKeyMap: Record<number, keyof ChecklistProgress> = {
   1: 'item1',
   2: 'item2',
@@ -25,7 +23,6 @@ const itemKeyMap: Record<number, keyof ChecklistProgress> = {
   5: 'item5',
 };
 
-// Map input IDs to eventData field names (same as ConceptualData keys)
 const inputToFieldMap: Record<string, keyof ConceptualData> = {
   hostGroup: 'hostGroup',
   theme: 'theme',
@@ -44,7 +41,6 @@ export default function ConceptualPage() {
 
   const items = conceptualContent.items as ChecklistItemType[];
 
-  // Load state on mount
   useEffect(() => {
     const progress = getProgress();
     const data = getEventData();
@@ -66,7 +62,6 @@ export default function ConceptualPage() {
   const handleSave = (itemNumber: number, values: Record<string, string>) => {
     if (!eventData) return;
     
-    // Save to event data
     const updates: Partial<ConceptualData> = {};
     Object.entries(values).forEach(([inputId, value]) => {
       const fieldName = inputToFieldMap[inputId];
@@ -79,7 +74,6 @@ export default function ConceptualPage() {
     setEventDataState(newEventData);
     updateConceptualData(updates);
 
-    // Mark item as saved
     const itemKey = itemKeyMap[itemNumber];
     const newProgress = updateChecklistItem('conceptual', itemKey, 'saved');
     setChecklist(newProgress.conceptualChecklist);
@@ -88,7 +82,6 @@ export default function ConceptualPage() {
   };
 
   const handleSkip = (itemNumber: number) => {
-    // Mark item as skipped
     const itemKey = itemKeyMap[itemNumber];
     const newProgress = updateChecklistItem('conceptual', itemKey, 'skipped');
     setChecklist(newProgress.conceptualChecklist);
@@ -102,6 +95,9 @@ export default function ConceptualPage() {
   };
 
   const allComplete = isChecklistComplete('conceptual');
+  const completedCount = checklist 
+    ? Object.values(checklist).filter(s => s === 'saved' || s === 'skipped').length 
+    : 0;
 
   if (!isLoaded || !checklist || !eventData) {
     return null;
@@ -109,7 +105,6 @@ export default function ConceptualPage() {
 
   const openItem = openModalIndex !== null ? items[openModalIndex] : null;
 
-  // Get current values for the open modal
   const getModalValues = (): Record<string, string> => {
     if (!openItem) return {};
     const values: Record<string, string> = {};
@@ -123,14 +118,23 @@ export default function ConceptualPage() {
   };
 
   return (
-    <main className="min-h-screen p-8">
-      <div className="max-w-2xl mx-auto">
+    <main className="min-h-screen flex flex-col items-center justify-center p-8">
+      <div className="w-full max-w-content">
         {/* Header */}
-        <h1 className="text-2xl font-bold mb-2">{conceptualContent.pageTitle}</h1>
-        <p className="text-gray-600 mb-8">Complete each item to move on.</p>
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-lab-white/80 backdrop-blur-sm rounded-full shadow-card mb-4">
+            <span className="text-caption font-medium text-lab-gray-500">Stage 1 of 2</span>
+            <span className="text-lab-gray-300">•</span>
+            <span className="text-caption font-medium text-lab-black">{completedCount}/5 complete</span>
+          </div>
+          <h1 className="text-display text-lab-black mb-3">Conceptual Planning</h1>
+          <p className="text-body text-lab-gray-500 max-w-md mx-auto">
+            What kind of Lab event are you running? Complete each step below.
+          </p>
+        </div>
 
         {/* Checklist */}
-        <div className="space-y-3 mb-8">
+        <div className="space-y-3 mb-10">
           {items.map((item, index) => (
             <ChecklistItem
               key={item.number}
@@ -143,13 +147,13 @@ export default function ConceptualPage() {
         </div>
 
         {/* Move on button */}
-        <div className="flex justify-end">
+        <div className="flex justify-center">
           <button
             onClick={handleMoveOn}
             disabled={!allComplete}
-            className="px-6 py-3 bg-black text-white rounded disabled:opacity-30 disabled:cursor-not-allowed"
+            className="btn-primary px-8"
           >
-            Move on →
+            Continue to logistics →
           </button>
         </div>
 

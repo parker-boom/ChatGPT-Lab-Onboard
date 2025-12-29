@@ -2,14 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base styles */
-html {
-  scroll-behavior: smooth;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply text-lab-black;
+  }
+
+  /* Refined focus styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-lab-yellow-400 ring-offset-2;
+  }
+
+  /* Better default input styles */
+  input, textarea {
+    @apply text-body;
+  }
+
+  input::placeholder, textarea::placeholder {
+    @apply text-lab-gray-400;
+  }
 }
 
-/* Custom scrollbar (optional, subtle) */
+@layer components {
+  /* Primary button */
+  .btn-primary {
+    @apply px-6 py-3 bg-lab-black text-lab-white font-medium rounded-button;
+    @apply transition-all duration-200;
+    @apply hover:bg-lab-gray-800 active:scale-[0.98];
+    @apply disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-lab-black disabled:active:scale-100;
+  }
+
+  /* Secondary/ghost button */
+  .btn-secondary {
+    @apply px-4 py-2 text-lab-gray-600 font-medium rounded-button;
+    @apply transition-colors duration-200;
+    @apply hover:text-lab-black hover:bg-lab-gray-100;
+    @apply disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-lab-white/95 backdrop-blur-sm rounded-card shadow-card;
+  }
+
+  .card-elevated {
+    @apply bg-lab-white rounded-card shadow-modal;
+  }
+}
+
+@layer utilities {
+  /* Text balance for headings */
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -18,7 +73,7 @@ html {
 
 ::-webkit-scrollbar-thumb {
   background: #D4D4D4;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
