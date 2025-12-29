@@ -1,78 +1,122 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import beakerContent from '@/content/beaker.json';
-import { updateProgress } from '@/lib/storage';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import beakerContent from "@/content/beaker.json";
+import { updateProgress, getEventData } from "@/lib/storage";
 
 export default function OutroPage() {
   const router = useRouter();
   const transition = beakerContent.transitions.outro;
+  const [eventData, setEventDataState] = useState<{ eventDateTime: string } | null>(null);
 
   useEffect(() => {
-    updateProgress({ currentPage: 'outro' });
+    updateProgress({ currentPage: "outro" });
+    const data = getEventData();
+    setEventDataState({ eventDateTime: data.logistics.eventDateTime });
   }, []);
 
   const handleFinish = () => {
-    updateProgress({ currentPage: 'done' });
-    router.push('/done');
+    updateProgress({ currentPage: "done" });
+    router.push("/done");
+  };
+
+  const handleDownloadPDF = () => {
+    // TODO: Implement PDF generation in Phase 5
+    alert("PDF download coming soon!");
+  };
+
+  const handleChatGPT = () => {
+    const data = getEventData();
+    const message = `Hey ChatGPT — I'm planning a ChatGPT Lab on my campus. Here are the details:
+
+Community: ${data.conceptual.hostGroup || "[Not set]"}
+Theme: ${data.conceptual.theme || "[Not set]"}
+Date & Time: ${data.logistics.eventDateTime || "[Not set]"}
+Venue: ${data.logistics.venue || "[Not set]"}
+My Use Case: ${data.conceptual.yourUseCase || "[Not set]"}
+Other Presenters: ${data.conceptual.potentialPresenters || "[Not set]"}
+Promotion Plan: ${data.logistics.promotionPlan || "[Not set]"}
+Day-of Supplies: ${data.logistics.supplies || "[Not set]"}
+Day-of Helpers: ${data.logistics.helpers || "[Not set]"}
+Post-Event Sharing Plan: ${data.conceptual.sharingPlan || "[Not set]"}
+
+1) Confirm you understand the plan.
+2) Summarize the plan in a few sentences.
+3) Be ready to help me refine anything: presenters, promo, run-of-show, discussion question, follow-up recap.`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://chat.openai.com/?q=${encodedMessage}`, "_blank");
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-8">
-      <div className="max-w-flow w-full">
-        {/* Beaker + Speech layout */}
-        <div className="flex gap-10 items-center">
-          {/* Beaker */}
-          <div className="flex-shrink-0">
-            <div className="w-36 h-36 bg-lab-white rounded-full shadow-card flex items-center justify-center overflow-hidden">
-              <Image
-                src="/assets/SmileyFace.png"
-                alt="Beaker"
-                width={120}
-                height={120}
-                className="object-contain"
-              />
-            </div>
+    <main className="min-h-screen flex flex-col p-8">
+      <div className="flex-1 flex items-center justify-center">
+        <div className="flex gap-8 items-stretch">
+          <div className="h-[460px] w-[307px] flex-shrink-0 bg-lab-white/90 backdrop-blur-sm rounded-card shadow-card overflow-hidden">
+            <Image
+              src="/assets/SmileyFace.png"
+              alt="Beaker"
+              width={307}
+              height={460}
+              className="w-full h-full object-cover"
+            />
           </div>
 
-          {/* Speech card */}
-          <div className="flex-1 card p-8">
-            {/* Celebration badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-lab-yellow-200 rounded-full mb-4">
-              <span className="text-lg">🎉</span>
-              <span className="text-caption font-medium text-lab-black">You did it!</span>
-            </div>
-
-            {/* Title */}
+          <div className="h-[460px] w-[560px] flex-shrink-0 card p-8 flex flex-col">
             <h1 className="text-heading text-lab-black mb-6 text-balance">
               {transition.title}
             </h1>
-            
-            {/* Dialogue */}
-            <div className="space-y-4">
+
+            <div className="space-y-4 mb-8">
               {transition.dialogue.map((line, i) => (
-                <p 
-                  key={i} 
-                  className="text-body text-lab-gray-700 leading-relaxed" 
-                  dangerouslySetInnerHTML={{ 
+                <p
+                  key={i}
+                  className="text-[1.2rem] text-lab-gray-700 leading-relaxed"
+                  dangerouslySetInnerHTML={{
                     __html: line
-                      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-lab-black font-semibold">$1</strong>')
-                      .replace(/_(.*?)_/g, '<em>$1</em>')
-                  }} 
+                      .replace(
+                        /\*\*(.*?)\*\*/g,
+                        '<strong class="text-lab-black font-semibold">$1</strong>'
+                      )
+                      .replace(/_(.*?)_/g, "<em>$1</em>"),
+                  }}
                 />
               ))}
             </div>
 
-            {/* CTA */}
-            <div className="flex justify-end mt-8 pt-6 border-t border-lab-gray-100">
-              <button onClick={handleFinish} className="btn-primary">
-                {transition.ctaText}
+            <div className="flex gap-3 mt-auto">
+              <button
+                onClick={handleDownloadPDF}
+                className="flex-1 flex items-center justify-center gap-3 px-5 py-5 bg-lab-gray-100 hover:bg-lab-gray-200 text-lab-black font-semibold rounded-button transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                {transition.pdfButtonText}
+              </button>
+              <button
+                onClick={handleChatGPT}
+                className="flex-1 flex items-center justify-center gap-3 px-5 py-5 bg-lab-gray-100 hover:bg-lab-gray-200 text-lab-black font-semibold rounded-button transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                {transition.chatButtonText}
               </button>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="flex flex-col items-center gap-3 pb-4">
+        <button
+          onClick={handleFinish}
+          className="px-10 py-4 bg-lab-black text-lab-white text-lg font-medium rounded-button hover:bg-lab-gray-800 active:scale-[0.98] transition-all"
+        >
+          {transition.ctaText}
+        </button>
       </div>
     </main>
   );

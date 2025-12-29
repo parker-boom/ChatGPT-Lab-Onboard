@@ -95,9 +95,6 @@ export default function LogisticsPage() {
   };
 
   const allComplete = isChecklistComplete('logistics');
-  const completedCount = checklist 
-    ? Object.values(checklist).filter(s => s === 'saved' || s === 'skipped').length 
-    : 0;
 
   if (!isLoaded || !checklist || !eventData) {
     return null;
@@ -121,20 +118,14 @@ export default function LogisticsPage() {
     <main className="min-h-screen flex flex-col items-center justify-center p-8">
       <div className="w-full max-w-content">
         {/* Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-lab-white/80 backdrop-blur-sm rounded-full shadow-card mb-4">
-            <span className="text-caption font-medium text-lab-gray-500">Stage 2 of 2</span>
-            <span className="text-lab-gray-300">•</span>
-            <span className="text-caption font-medium text-lab-black">{completedCount}/5 complete</span>
-          </div>
-          <h1 className="text-display text-lab-black mb-3">Logistical Planning</h1>
-          <p className="text-body text-lab-gray-500 max-w-md mx-auto">
-            How are you going to host and promote the event? Lock in the details.
-          </p>
+        <div className="text-center mb-12">
+          <h1 className="text-[2.75rem] font-black italic text-lab-black tracking-tight drop-shadow-sm">
+            {logisticsContent.title}
+          </h1>
         </div>
 
         {/* Checklist */}
-        <div className="space-y-3 mb-10">
+        <div className="space-y-4 mb-12">
           {items.map((item, index) => (
             <ChecklistItem
               key={item.number}
@@ -153,7 +144,7 @@ export default function LogisticsPage() {
             disabled={!allComplete}
             className="btn-primary px-8"
           >
-            Review your plan →
+            Review your plan
           </button>
         </div>
 

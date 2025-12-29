@@ -51,36 +51,30 @@ export default function IntroPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-8">
-      <div className="max-w-flow w-full">
-        {/* Beaker + Speech layout */}
-        <div className="flex gap-10 items-center">
-          {/* Beaker */}
-          <div className="flex-shrink-0">
-            <div className="w-36 h-36 bg-lab-white rounded-full shadow-card flex items-center justify-center overflow-hidden">
-              <Image
-                src="/assets/SmileyFace.png"
-                alt="Beaker"
-                width={120}
-                height={120}
-                className="object-contain"
-              />
-            </div>
+    <main className="min-h-screen flex flex-col p-8">
+      {/* Main content - centered */}
+      <div className="flex-1 flex items-center justify-center">
+        <div className="flex gap-8 items-stretch">
+          <div className="h-[460px] w-[307px] flex-shrink-0 bg-lab-white/90 backdrop-blur-sm rounded-card shadow-card overflow-hidden">
+            <Image
+              src="/assets/SmileyFace.png"
+              alt="Beaker"
+              width={307}
+              height={460}
+              className="w-full h-full object-cover"
+            />
           </div>
 
-          {/* Speech card */}
-          <div className="flex-1 card p-8">
-            {/* Title */}
+          <div className="h-[460px] w-[560px] flex-shrink-0 card p-8 flex flex-col">
             <h1 className="text-heading text-lab-black mb-6 text-balance">
               {currentSlide.title}
             </h1>
             
-            {/* Dialogue */}
             <div className="space-y-4">
               {currentSlide.dialogue.map((line, i) => (
                 <p 
                   key={i} 
-                  className="text-body text-lab-gray-700 leading-relaxed" 
+                  className="text-[1.2rem] text-lab-gray-700 leading-relaxed" 
                   dangerouslySetInnerHTML={{ 
                     __html: line
                       .replace(/\*\*(.*?)\*\*/g, '<strong class="text-lab-black font-semibold">$1</strong>')
@@ -89,39 +83,24 @@ export default function IntroPage() {
                 />
               ))}
             </div>
-
-            {/* Navigation */}
-            <div className="flex items-center justify-between mt-8 pt-6 border-t border-lab-gray-100">
-              <button
-                onClick={handleBack}
-                disabled={slideIndex === 0}
-                className="btn-secondary disabled:opacity-0"
-              >
-                ← Back
-              </button>
-
-              {/* Progress dots */}
-              <div className="flex gap-2">
-                {slides.map((_, i) => (
-                  <div
-                    key={i}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      i === slideIndex 
-                        ? 'bg-lab-black' 
-                        : i < slideIndex 
-                          ? 'bg-lab-gray-400'
-                          : 'bg-lab-gray-200'
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <button onClick={handleNext} className="btn-primary">
-                {isLastSlide ? (currentSlide.ctaText || 'Continue') : 'Next'}
-              </button>
-            </div>
           </div>
         </div>
+      </div>
+
+      {/* Bottom navigation - fixed at bottom */}
+      <div className="flex flex-col items-center gap-3 pb-4">
+        <button onClick={handleNext} className="px-10 py-4 bg-lab-black text-lab-white text-lg font-medium rounded-button hover:bg-lab-gray-800 active:scale-[0.98] transition-all">
+          {isLastSlide ? (currentSlide.ctaText || 'Continue') : 'Next'}
+        </button>
+        <button
+          onClick={handleBack}
+          disabled={slideIndex === 0}
+          className={`text-body text-lab-gray-600 underline hover:text-lab-black transition-colors ${
+            slideIndex === 0 ? 'invisible' : ''
+          }`}
+        >
+          Back
+        </button>
       </div>
     </main>
   );

@@ -19,13 +19,14 @@
       "ctaText": "Review & download"
     },
     "outro": {
-      "title": "You're done. Go host something awesome.",
+      "title": "You're all set!",
       "dialogue": [
-        "That's it — you've got a planning doc, and you can ask ChatGPT for help anytime with your event.",
-        "Last thing: after you host, please fill out the form so the OpenAI team can credit you and share what you learned.",
-        "Alright. Go be the reason your campus has a smarter AI conversation."
+        "Your plan is ready to go. Download a PDF to share with your team, or chat with ChatGPT to keep refining the details.",
+        "After your event, fill out the host form so the OpenAI team can credit you and share what you learned."
       ],
-      "ctaText": "Finish"
+      "pdfButtonText": "Download PDF",
+      "chatButtonText": "Chat with ChatGPT",
+      "ctaText": "Finish planning"
     }
   }
 }

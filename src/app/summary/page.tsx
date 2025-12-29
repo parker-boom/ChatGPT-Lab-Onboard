@@ -1,76 +1,55 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { EventData } from '@/lib/types';
-import { getEventData, setEventData, updateProgress } from '@/lib/storage';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { EventData } from "@/lib/types";
+import { getEventData, setEventData, updateProgress } from "@/lib/storage";
 
-const conceptualFields = [
-  { key: 'hostGroup', label: 'Host community' },
-  { key: 'theme', label: 'Theme' },
-  { key: 'yourUseCase', label: 'Your show & tell use case' },
-  { key: 'potentialPresenters', label: 'Other potential presenters', multiline: true },
-  { key: 'guidingQuestion', label: 'Guiding question' },
-  { key: 'sharingPlan', label: 'Sharing plan', multiline: true },
-];
-
-const logisticsFields = [
-  { key: 'eventDateTime', label: 'Event date & time', type: 'datetime' },
-  { key: 'venue', label: 'Venue / location' },
-  { key: 'presenterList', label: 'Confirmed presenters', multiline: true },
-  { key: 'promotionPlan', label: 'Promotion plan', multiline: true },
-  { key: 'supplies', label: 'Supplies needed', multiline: true },
-  { key: 'helpers', label: 'Day-of helpers', multiline: true },
-];
-
-interface EditableFieldProps {
+interface FieldProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
   multiline?: boolean;
   type?: string;
+  half?: boolean;
 }
 
-function EditableField({ label, value, onChange, multiline, type }: EditableFieldProps) {
+function Field({ label, value, onChange, multiline, type, half }: FieldProps) {
   const isEmpty = !value;
 
   return (
-    <div className="group py-4 border-b border-lab-gray-100 last:border-b-0">
-      <label className="block text-caption font-medium text-lab-gray-500 mb-1.5">
+    <div className={half ? "flex-1" : "w-full"}>
+      <label className="block text-[0.8rem] font-semibold text-lab-gray-500 uppercase tracking-wide mb-1.5">
         {label}
       </label>
       {multiline ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Add later..."
+          placeholder="Not set"
           className={`
-            w-full px-3 py-2 -mx-3
-            bg-transparent rounded-button
-            text-body-sm leading-relaxed
-            border border-transparent
+            w-full px-4 py-3
+            bg-lab-white border-2 border-lab-gray-200 rounded-button
+            text-[1rem] leading-relaxed
             transition-all duration-200
-            focus:bg-lab-white focus:border-lab-gray-200 focus:outline-none
-            group-hover:bg-lab-gray-50
+            focus:border-lab-yellow-400 focus:outline-none
             resize-none
-            ${isEmpty ? 'text-lab-gray-400 italic' : 'text-lab-black'}
+            ${isEmpty ? "text-lab-gray-400 italic" : "text-lab-black"}
           `}
-          rows={2}
+          rows={3}
         />
-      ) : type === 'datetime' ? (
+      ) : type === "datetime" ? (
         <input
           type="datetime-local"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={`
-            w-full px-3 py-2 -mx-3
-            bg-transparent rounded-button
-            text-body-sm
-            border border-transparent
+            w-full px-4 py-3
+            bg-lab-white border-2 border-lab-gray-200 rounded-button
+            text-[1rem]
             transition-all duration-200
-            focus:bg-lab-white focus:border-lab-gray-200 focus:outline-none
-            group-hover:bg-lab-gray-50
-            ${isEmpty ? 'text-lab-gray-400' : 'text-lab-black'}
+            focus:border-lab-yellow-400 focus:outline-none
+            ${isEmpty ? "text-lab-gray-400" : "text-lab-black"}
           `}
         />
       ) : (
@@ -78,16 +57,14 @@ function EditableField({ label, value, onChange, multiline, type }: EditableFiel
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Add later..."
+          placeholder="Not set"
           className={`
-            w-full px-3 py-2 -mx-3
-            bg-transparent rounded-button
-            text-body-sm
-            border border-transparent
+            w-full px-4 py-3
+            bg-lab-white border-2 border-lab-gray-200 rounded-button
+            text-[1rem]
             transition-all duration-200
-            focus:bg-lab-white focus:border-lab-gray-200 focus:outline-none
-            group-hover:bg-lab-gray-50
-            ${isEmpty ? 'text-lab-gray-400 italic' : 'text-lab-black'}
+            focus:border-lab-yellow-400 focus:outline-none
+            ${isEmpty ? "text-lab-gray-400 italic" : "text-lab-black"}
           `}
         />
       )}
@@ -103,33 +80,27 @@ export default function SummaryPage() {
   useEffect(() => {
     const eventData = getEventData();
     setData(eventData);
-    updateProgress({ currentPage: 'summary' });
+    updateProgress({ currentPage: "summary" });
     setIsLoaded(true);
   }, []);
 
-  const handleConceptualChange = (key: string, value: string) => {
+  const handleChange = (
+    section: "conceptual" | "logistics",
+    key: string,
+    value: string
+  ) => {
     if (!data) return;
     const newData: EventData = {
       ...data,
-      conceptual: { ...data.conceptual, [key]: value },
-    };
-    setData(newData);
-    setEventData(newData);
-  };
-
-  const handleLogisticsChange = (key: string, value: string) => {
-    if (!data) return;
-    const newData: EventData = {
-      ...data,
-      logistics: { ...data.logistics, [key]: value },
+      [section]: { ...data[section], [key]: value },
     };
     setData(newData);
     setEventData(newData);
   };
 
   const handleContinue = () => {
-    updateProgress({ currentPage: 'outro' });
-    router.push('/outro');
+    updateProgress({ currentPage: "outro" });
+    router.push("/outro");
   };
 
   if (!isLoaded || !data) {
@@ -138,96 +109,108 @@ export default function SummaryPage() {
 
   return (
     <main className="min-h-screen py-12 px-8">
-      <div className="max-w-content-wide mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-lab-green/10 text-lab-green rounded-full mb-4">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-caption font-medium">Planning complete</span>
-          </div>
-          <h1 className="text-display text-lab-black mb-3">Your Event Plan</h1>
-          <p className="text-body text-lab-gray-500 max-w-md mx-auto">
-            Review and refine your plan. Click any field to edit — changes save automatically.
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-10">
+          <h1 className="text-[2.75rem] font-black italic text-lab-black tracking-tight drop-shadow-sm mb-2">
+            🧪 Your Event Plan
+          </h1>
+          <p className="text-[1.1rem] text-lab-gray-600">
+            Review and edit your plan below
           </p>
         </div>
 
-        {/* Two-column layout */}
-        <div className="grid grid-cols-2 gap-8 mb-12">
-          {/* Conceptual Planning */}
-          <section className="card p-6">
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-lab-gray-200">
-              <div className="w-8 h-8 rounded-full bg-lab-yellow-200 flex items-center justify-center">
-                <span className="text-sm font-semibold">1</span>
-              </div>
-              <h2 className="text-subheading text-lab-black">Conceptual</h2>
+        <div className="card p-8 mb-8">
+          <div className="space-y-6">
+            <div className="flex gap-4">
+              <Field
+                label="Community"
+                value={data.conceptual.hostGroup}
+                onChange={(v) => handleChange("conceptual", "hostGroup", v)}
+                half
+              />
+              <Field
+                label="Theme"
+                value={data.conceptual.theme}
+                onChange={(v) => handleChange("conceptual", "theme", v)}
+                half
+              />
             </div>
-            <div>
-              {conceptualFields.map((field) => (
-                <EditableField
-                  key={field.key}
-                  label={field.label}
-                  value={data.conceptual[field.key as keyof typeof data.conceptual] || ''}
-                  onChange={(value) => handleConceptualChange(field.key, value)}
-                  multiline={field.multiline}
-                />
-              ))}
-            </div>
-          </section>
 
-          {/* Logistical Planning */}
-          <section className="card p-6">
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-lab-gray-200">
-              <div className="w-8 h-8 rounded-full bg-lab-yellow-200 flex items-center justify-center">
-                <span className="text-sm font-semibold">2</span>
-              </div>
-              <h2 className="text-subheading text-lab-black">Logistics</h2>
+            <div className="flex gap-4">
+              <Field
+                label="Date & Time"
+                value={data.logistics.eventDateTime}
+                onChange={(v) => handleChange("logistics", "eventDateTime", v)}
+                type="datetime"
+                half
+              />
+              <Field
+                label="Venue"
+                value={data.logistics.venue}
+                onChange={(v) => handleChange("logistics", "venue", v)}
+                half
+              />
             </div>
-            <div>
-              {logisticsFields.map((field) => (
-                <EditableField
-                  key={field.key}
-                  label={field.label}
-                  value={data.logistics[field.key as keyof typeof data.logistics] || ''}
-                  onChange={(value) => handleLogisticsChange(field.key, value)}
-                  multiline={field.multiline}
-                  type={field.type}
-                />
-              ))}
+
+            <div className="border-t border-lab-gray-100 pt-6">
+              <Field
+                label="My Use Case"
+                value={data.conceptual.yourUseCase}
+                onChange={(v) => handleChange("conceptual", "yourUseCase", v)}
+              />
             </div>
-          </section>
+
+            <div className="flex gap-4">
+              <Field
+                label="Other Presenters"
+                value={data.conceptual.potentialPresenters}
+                onChange={(v) =>
+                  handleChange("conceptual", "potentialPresenters", v)
+                }
+                multiline
+                half
+              />
+              <Field
+                label="Promotion Plan"
+                value={data.logistics.promotionPlan}
+                onChange={(v) => handleChange("logistics", "promotionPlan", v)}
+                multiline
+                half
+              />
+            </div>
+
+            <div className="flex gap-4">
+              <Field
+                label="Day-of Supplies"
+                value={data.logistics.supplies}
+                onChange={(v) => handleChange("logistics", "supplies", v)}
+                multiline
+                half
+              />
+              <Field
+                label="Day-of Helpers"
+                value={data.logistics.helpers}
+                onChange={(v) => handleChange("logistics", "helpers", v)}
+                multiline
+                half
+              />
+            </div>
+
+            <div className="border-t border-lab-gray-100 pt-6">
+              <Field
+                label="Post-Event Sharing Plan"
+                value={data.conceptual.sharingPlan}
+                onChange={(v) => handleChange("conceptual", "sharingPlan", v)}
+                multiline
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Actions */}
-        <div className="card p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex gap-4">
-              <button
-                disabled
-                className="inline-flex items-center gap-2 px-4 py-2.5 border-2 border-lab-gray-200 rounded-button text-body-sm font-medium text-lab-gray-400"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                Download PDF
-                <span className="text-caption text-lab-gray-300 ml-1">Soon</span>
-              </button>
-              <button
-                disabled
-                className="inline-flex items-center gap-2 px-4 py-2.5 border-2 border-lab-gray-200 rounded-button text-body-sm font-medium text-lab-gray-400"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                Chat with GPT
-                <span className="text-caption text-lab-gray-300 ml-1">Soon</span>
-              </button>
-            </div>
-            <button onClick={handleContinue} className="btn-primary">
-              Finish up →
-            </button>
-          </div>
+        <div className="flex justify-center">
+          <button onClick={handleContinue} className="btn-primary px-10">
+            Continue
+          </button>
         </div>
       </div>
     </main>
