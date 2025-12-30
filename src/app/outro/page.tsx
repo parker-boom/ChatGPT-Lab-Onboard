@@ -2,13 +2,13 @@
 
 import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import beakerContent from '@/content/beaker.json';
+import transitionsContent from '@/content/transitions.json';
 import { updateProgress, getEventData } from '@/lib/storage';
 import { BeakerLayout } from '@/components/BeakerLayout';
 
 export default function OutroPage() {
   const router = useRouter();
-  const transition = beakerContent.transitions.outro;
+  const transition = transitionsContent.transitions.outro;
 
   const handleFinish = useCallback(() => {
     updateProgress({ currentPage: 'done' });

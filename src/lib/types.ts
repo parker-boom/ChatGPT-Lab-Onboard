@@ -24,6 +24,7 @@ export interface ChecklistProgress {
 
 export interface Progress {
   currentPage: PageId;
+  furthestPage: PageId;
   introSlideIndex: number;
   conceptualChecklist: ChecklistProgress;
   logisticsChecklist: ChecklistProgress;
@@ -31,6 +32,7 @@ export interface Progress {
 
 export const DEFAULT_PROGRESS: Progress = {
   currentPage: 'intro',
+  furthestPage: 'intro',
   introSlideIndex: 0,
   conceptualChecklist: {
     item1: 'pending',
@@ -114,6 +116,7 @@ export interface IntroSlideInput {
   id: string;
   label: string;
   placeholder?: string;
+  type?: 'text';
 }
 
 export interface IntroSlide {
@@ -121,6 +124,7 @@ export interface IntroSlide {
   dialogue: string[];
   ctaText?: string;
   input?: IntroSlideInput;
+  inputs?: IntroSlideInput[];
 }
 
 export interface ChecklistItemInput {

@@ -3,16 +3,22 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import introContent from '@/content/intro.json';
-import { getProgress, updateProgress, getEventData, setEventData } from '@/lib/storage';
+import { getProgress, updateProgress, getEventData, setEventData, isPageAfter } from '@/lib/storage';
 import { BeakerLayout } from '@/components/BeakerLayout';
 import { usePreloadImages } from '@/hooks/usePreloadImages';
 import { IntroSlide } from '@/lib/types';
+
+type IntroRootField = 'campus';
+
+const INTRO_INPUT_FIELD_MAP: Record<string, IntroRootField> = {
+  campus: 'campus',
+};
 
 export default function IntroPage() {
   const router = useRouter();
   const [slideIndex, setSlideIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [campusValue, setCampusValue] = useState('');
+  const [introValues, setIntroValues] = useState<Record<string, string>>({});
 
   const slides = introContent.slides as IntroSlide[];
   const currentSlide = slides[slideIndex];
@@ -42,15 +48,21 @@ export default function IntroPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNext]);
 
-  // Load saved slide index and campus value on mount
+  // Load saved slide index and intro input values on mount
   useEffect(() => {
     const progress = getProgress();
     const eventData = getEventData();
-    
-    if (progress.introSlideIndex < slides.length) {
-      setSlideIndex(progress.introSlideIndex);
-    }
-    setCampusValue(eventData.campus || '');
+    const lastIndex = Math.max(slides.length - 1, 0);
+    const hasPassedIntro = isPageAfter(progress.furthestPage, 'intro');
+    const resolvedSlideIndex = hasPassedIntro
+      ? lastIndex
+      : Math.min(progress.introSlideIndex, lastIndex);
+    setSlideIndex(resolvedSlideIndex);
+    const initialValues: Record<string, string> = {};
+    Object.entries(INTRO_INPUT_FIELD_MAP).forEach(([inputId, fieldKey]) => {
+      initialValues[inputId] = eventData[fieldKey] || '';
+    });
+    setIntroValues(initialValues);
     setIsLoaded(true);
   }, [slides.length]);
 
@@ -61,11 +73,13 @@ export default function IntroPage() {
     }
   }, [slideIndex, isLoaded]);
 
-  // Save campus value when it changes
-  const handleCampusChange = (value: string) => {
-    setCampusValue(value);
+  // Save intro values when they change
+  const handleIntroChange = (id: string, value: string) => {
+    setIntroValues((prev) => ({ ...prev, [id]: value }));
+    const fieldKey = INTRO_INPUT_FIELD_MAP[id];
+    if (!fieldKey) return;
     const eventData = getEventData();
-    setEventData({ ...eventData, campus: value });
+    setEventData({ ...eventData, [fieldKey]: value });
   };
 
   const handleBack = () => {
@@ -78,19 +92,25 @@ export default function IntroPage() {
     return null;
   }
 
-  // Render input field if this slide has one
-  const inputContent = currentSlide.input ? (
-    <div className="mt-6">
-      <label className="block text-[0.85rem] font-semibold text-lab-gray-500 uppercase tracking-wide mb-2">
-        {currentSlide.input.label}
-      </label>
-      <input
-        type="text"
-        value={campusValue}
-        onChange={(e) => handleCampusChange(e.target.value)}
-        placeholder={currentSlide.input.placeholder || ''}
-        className="w-full px-4 py-3 bg-lab-gray-50 border-2 border-lab-gray-200 rounded-button text-[1rem] placeholder:text-lab-gray-400 focus:outline-none focus:border-lab-yellow-400 focus:bg-lab-white transition-colors"
-      />
+  const slideInputs = currentSlide.inputs ?? (currentSlide.input ? [currentSlide.input] : []);
+
+  // Render input field(s) if this slide has them
+  const inputContent = slideInputs.length > 0 ? (
+    <div className="mt-6 space-y-4">
+      {slideInputs.map((input) => (
+        <div key={input.id}>
+          <label className="block text-[0.85rem] font-semibold text-lab-gray-500 uppercase tracking-wide mb-2">
+            {input.label}
+          </label>
+          <input
+            type={input.type || 'text'}
+            value={introValues[input.id] || ''}
+            onChange={(e) => handleIntroChange(input.id, e.target.value)}
+            placeholder={input.placeholder || ''}
+            className="w-full px-4 py-3 bg-lab-gray-50 border-2 border-lab-gray-200 rounded-button text-[1rem] placeholder:text-lab-gray-400 focus:outline-none focus:border-lab-yellow-400 focus:bg-lab-white transition-colors"
+          />
+        </div>
+      ))}
     </div>
   ) : null;
 

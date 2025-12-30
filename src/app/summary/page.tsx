@@ -178,6 +178,13 @@ export default function SummaryPage() {
               />
             </div>
 
+            <Field
+              label="Presenters"
+              value={data.logistics.presenterList}
+              onChange={(v) => handleChange('logistics', 'presenterList', v)}
+              multiline
+            />
+
             <div className="border-t border-lab-gray-100 pt-6">
               <Field
                 label="My Use Case"

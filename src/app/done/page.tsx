@@ -72,7 +72,7 @@ export default function DonePage() {
   }, [eventDateTime]);
 
   const handleBackToStart = () => {
-    updateProgress({ currentPage: 'intro', introSlideIndex: 0 });
+    updateProgress({ currentPage: 'intro', furthestPage: 'intro', introSlideIndex: 0 });
     router.push('/intro');
   };
 

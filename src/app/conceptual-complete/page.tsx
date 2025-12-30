@@ -2,13 +2,13 @@
 
 import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import beakerContent from '@/content/beaker.json';
+import transitionsContent from '@/content/transitions.json';
 import { updateProgress } from '@/lib/storage';
 import { BeakerLayout } from '@/components/BeakerLayout';
 
 export default function ConceptualCompletePage() {
   const router = useRouter();
-  const transition = beakerContent.transitions.afterConceptual;
+  const transition = transitionsContent.transitions.afterConceptual;
 
   const handleContinue = useCallback(() => {
     updateProgress({ currentPage: 'logistics' });

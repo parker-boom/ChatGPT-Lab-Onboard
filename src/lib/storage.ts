@@ -9,6 +9,57 @@ import {
 const PROGRESS_KEY = 'chatgpt-lab-progress';
 const EVENT_DATA_KEY = 'chatgpt-lab-event-data';
 
+type PageId = Progress['currentPage'];
+
+const PAGE_ORDER: PageId[] = [
+  'intro',
+  'conceptual',
+  'conceptual-complete',
+  'logistics',
+  'logistics-complete',
+  'summary',
+  'outro',
+  'done',
+];
+
+function getPageIndex(page: PageId): number {
+  return PAGE_ORDER.indexOf(page);
+}
+
+function resolvePageId(value: unknown, fallback: PageId): PageId {
+  if (typeof value !== 'string') return fallback;
+  return PAGE_ORDER.includes(value as PageId) ? (value as PageId) : fallback;
+}
+
+export function isPageAfter(current: PageId, target: PageId): boolean {
+  return getPageIndex(current) > getPageIndex(target);
+}
+
+function resolveFurthestPage(currentPage: PageId, furthestPage?: PageId): PageId {
+  if (!furthestPage) return currentPage;
+  return isPageAfter(furthestPage, currentPage) ? furthestPage : currentPage;
+}
+
+function mergeChecklistProgress(
+  defaults: Progress['conceptualChecklist'],
+  stored: Partial<Progress['conceptualChecklist']> | undefined,
+  hasStoredProgress: boolean
+): Progress['conceptualChecklist'] {
+  const merged = { ...defaults };
+  (Object.keys(defaults) as (keyof Progress['conceptualChecklist'])[]).forEach((key) => {
+    const storedValue = stored?.[key];
+    if (storedValue === 'pending' || storedValue === 'saved' || storedValue === 'skipped') {
+      merged[key] = storedValue;
+      return;
+    }
+    if (hasStoredProgress) {
+      // New checklist items for returning users are assumed complete.
+      merged[key] = 'skipped';
+    }
+  });
+  return merged;
+}
+
 // ============================================
 // Progress Storage
 // ============================================
@@ -19,7 +70,33 @@ export function getProgress(): Progress {
   try {
     const stored = localStorage.getItem(PROGRESS_KEY);
     if (!stored) return DEFAULT_PROGRESS;
-    return { ...DEFAULT_PROGRESS, ...JSON.parse(stored) };
+    const parsed = JSON.parse(stored) as Partial<Progress>;
+    const resolvedCurrentPage = resolvePageId(parsed.currentPage, DEFAULT_PROGRESS.currentPage);
+    const resolvedFurthestPage = resolveFurthestPage(
+      resolvedCurrentPage,
+      resolvePageId(parsed.furthestPage, resolvedCurrentPage)
+    );
+    const resolvedIntroSlideIndex =
+      typeof parsed.introSlideIndex === 'number'
+        ? parsed.introSlideIndex
+        : DEFAULT_PROGRESS.introSlideIndex;
+    return {
+      ...DEFAULT_PROGRESS,
+      ...parsed,
+      currentPage: resolvedCurrentPage,
+      furthestPage: resolvedFurthestPage,
+      introSlideIndex: resolvedIntroSlideIndex,
+      conceptualChecklist: mergeChecklistProgress(
+        DEFAULT_PROGRESS.conceptualChecklist,
+        parsed.conceptualChecklist,
+        true
+      ),
+      logisticsChecklist: mergeChecklistProgress(
+        DEFAULT_PROGRESS.logisticsChecklist,
+        parsed.logisticsChecklist,
+        true
+      ),
+    };
   } catch {
     return DEFAULT_PROGRESS;
   }
@@ -37,7 +114,14 @@ export function setProgress(progress: Progress): void {
 
 export function updateProgress(updates: Partial<Progress>): Progress {
   const current = getProgress();
-  const updated = { ...current, ...updates };
+  const nextCurrentPage = updates.currentPage ?? current.currentPage;
+  const nextFurthestCandidate = updates.furthestPage ?? current.furthestPage;
+  const updated = {
+    ...current,
+    ...updates,
+    currentPage: nextCurrentPage,
+    furthestPage: resolveFurthestPage(nextCurrentPage, nextFurthestCandidate),
+  };
   setProgress(updated);
   return updated;
 }
