@@ -3,48 +3,50 @@
     {
       "title": "Welcome!",
       "dialogue": [
-        "Hey! I'm **Beaker** — official ChatGPT Lab mascot and _self-appointed_ event planner.",
-        "I heard you're going to host a ChatGPT Lab on your campus. Congrats — that's literally my favorite thing.",
-        "I'll walk you through planning it step by step. We'll keep it simple, and you can come back anytime — we save your progress."
+        "I'm **Beaker**, the official ChatGPT Lab mascot and self-appointed event planner.",
+        "Looks like you're ready to host a Lab event on your campus—I'm excited to help you make it happen.",
+        "I'll walk you through planning it step by step. Feel free to leave anytime; whenever you come back, your progress will be saved."
       ]
     },
     {
       "title": "What's a ChatGPT Lab?",
       "dialogue": [
-        "A ChatGPT Lab is a **one-hour, peer-led, show-and-tell** event where students share how they're using AI.",
-        "The goal isn't to 'teach' everyone AI. It's to explore with curiosity and leave with an **'I wonder if…'** and the confidence to try something new."
+        "Quick reminder: you'll be hosting a **one-hour, peer-led show-and-tell** where students share how they're actually using AI.",
+        "Your goal isn't to teach everyone AI—it's to have them leave with a few new ways to use it, plus the curiosity and confidence to try something new.",
+        "Feel free to get creative with it. I'll give you a structure, but the event is yours to shape."
       ]
     },
     {
-      "title": "What do I get as a host?",
+      "title": "Here's how we'll support you",
       "dialogue": [
-        "You'll get support and resources to run a great event.",
-        "Typically, OpenAI provides things like **100 Chats books** to help start the conversation.",
-        "And you'll be part of the host community — basically a **campus ambassador** for bringing the Lab to your school.",
-        "Your event can also get highlighted back to the broader Lab community."
+        "I've convinced OpenAI to send you some **100 Chats books**—they're great for sparking conversation.",
+        "You'll also join a community of students hosting Labs at their own campuses. You can swap ideas, learn what's working, and steal shamelessly from each other.",
+        "And if your event goes well, we might feature it to the broader community. No pressure. Okay, a little pressure."
       ]
     },
     {
       "title": "Here's the plan",
       "dialogue": [
-        "We'll do this in three parts:",
-        "1) **Conceptual planning** — decide what kind of Lab you're running.",
-        "2) **Logistical planning** — lock in the details so you can actually host it.",
-        "3) **Summary** — we'll generate a clean planning doc and a ChatGPT link so you can keep working on it.",
-        "Ready? Let's make a Lab worth showing up to."
+        "We'll do this in two parts:",
+        "**Conceptual planning** — you'll brainstorm what your event will actually focus on.",
+        "**Logistical planning** — you'll lock in the real details: when, where, who, how.",
+        "Throughout, you'll be giving me information. At the end, I'll turn it into a helpful planning doc and hand you off to my best friend ChatGPT to keep refining things."
       ]
     },
     {
-      "title": "Oh, one last thing!",
+      "title": "One last thing",
       "dialogue": [
-        "Which campus are you at? This helps me keep track of things and will make the process a bit smoother for both of us."
+        "Oh yeah—one last thing. What campus are you at?",
+        "This helps both of us stay organized. You'll be able to keep track of your plan, and I'll know where to send good vibes."
       ],
-      "input": {
-        "id": "campus",
-        "label": "Your campus or school name",
-        "placeholder": "e.g., Stanford University"
-      },
-      "ctaText": "Start planning"
+      "inputs": [
+        {
+          "id": "campus",
+          "label": "Your campus",
+          "type": "text"
+        }
+      ],
+      "ctaText": "Let's go"
     }
   ]
 }

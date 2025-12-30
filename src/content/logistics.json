@@ -3,12 +3,12 @@
   "items": [
     {
       "number": 1,
-      "title": "Decide when and where to host",
+      "title": "Decide when & where to host",
       "description": [
-        "Choose a day and time that works for you, and book a room on campus that fits your expected number of guests.",
-        "If you will have 5+ guests, you'll want a room with a projector so not everyone is crowded around a laptop."
+        "Find a day and time that works for you and will work for others too. Then book a room on campus that can accommodate everyone.",
+        "If you're expecting more than 5 people, you'll want to get a room with a projector so not everyone is crowded around a laptop."
       ],
-      "brainstormQuestion": "How big of a room will I need? What is a good time to host so that students will be available and can easily attend?",
+      "brainstormQuestion": "How big of a room will I need and what time should I book it for?",
       "inputs": [
         {
           "id": "eventDateTime",
@@ -17,23 +17,23 @@
         },
         {
           "id": "venue",
-          "label": "Place on campus to host the event",
+          "label": "Where you'll host on campus",
           "type": "text"
         }
       ]
     },
     {
       "number": 2,
-      "title": "Secure your fellow presenters",
+      "title": "Lock in your presenters",
       "description": [
-        "It's easier and more comfortable to host an event with others.",
-        "Think about other people you know who are interested in AI and use ChatGPT responsibly who might have a use case they would want to share. Invite them to present with you."
+        "Now that you know the logistics of your event, it's time to reach out. Think about friends or peers who'd be excited to share how they're using ChatGPT.",
+        "Confirm they're willing and able to present—five presenters is the sweet spot."
       ],
-      "brainstormQuestion": "Who else do you know that uses ChatGPT responsibly and would be excited to talk about their use?",
+      "brainstormQuestion": "Who will you reach out to this week?",
       "inputs": [
         {
           "id": "presenterList",
-          "label": "People who might be interested in presenting",
+          "label": "Presenters you'll invite",
           "type": "textarea"
         }
       ]
@@ -42,11 +42,11 @@
       "number": 3,
       "title": "Create a slideshow",
       "description": [
-        "Events are easier to run when they are structured and have a clear flow.",
-        "It is best to create a slideshow.",
-        "Think about how you can introduce the flow of the event, give each presenter a slide, pose your guiding question, and add whatever else you want.",
-        "Consider using the template below to get started!"
+        "Events are easier to run when they have a clear structure. To help yours flow better, use a slideshow.",
+        "Think about how you can introduce the event, give each presenter a slide, pose your guiding question, and add whatever else you want.",
+        "There's a template below you can use to get started and customize as needed."
       ],
+      "brainstormQuestion": "How might I structure a slideshow to help the event run smoothly?",
       "inputs": [],
       "templateButton": {
         "label": "Download slide template",
@@ -57,17 +57,16 @@
       "number": 4,
       "title": "Invite people & promote",
       "description": [
-        "Use a tool like Lu.ma to build an event info and registration page.",
+        "Use a tool like Lu.ma to build an event page with info and registration.",
         "Be sure to clearly explain the purpose, format, and what students will get out of it.",
-        "Include information about the 100 Chats project and you the host.",
-        "Start with personal connections: invite people you know, group chats you're a part of.",
-        "Then go wider: put up flyers, promote it at your club, and through normal campus channels."
+        "Start with personal connections: invite people you know, group chats you're a part of. Then go wider—put up flyers, promote it at your club, and through normal campus channels.",
+        "There's a flyer template below you can use to get started and customize as needed."
       ],
-      "brainstormQuestion": "How might you promote the event and what ways will be most effective?",
+      "brainstormQuestion": "What's the best way to promote my event to people who might already be interested?",
       "inputs": [
         {
           "id": "promotionPlan",
-          "label": "How you are going to promote the event",
+          "label": "Your promotion plan",
           "type": "textarea"
         }
       ],
@@ -78,23 +77,22 @@
     },
     {
       "number": 5,
-      "title": "Plan the day-of logistics",
+      "title": "Finalize day-of logistics",
       "description": [
-        "If you're expecting 10+ people, it's worth having one or two trusted friends by your side.",
-        "Extra hands make the event run more smoothly—and make hosting feel lighter.",
-        "You might need help with: setting up the room/projector, greeting people, keeping time during show-and-tells, taking notes/photos, and anything else that helps you capture what you learn.",
-        "Think about any supplies you might need too."
+        "Larger events can get chaotic—consider having a few trusted friends help you out.",
+        "Think through everything that goes into the day of: setting up the room, testing the projector, greeting people, keeping time during presentations, taking photos, and capturing what you learn.",
+        "Also think about any supplies you might need to bring."
       ],
-      "brainstormQuestion": "Would it be valuable to have some additional support and what materials might you need too?",
+      "brainstormQuestion": "Do I need additional support or materials for the day of the event?",
       "inputs": [
         {
           "id": "supplies",
-          "label": "Supplies you might need to secure",
+          "label": "Supplies you'll need",
           "type": "textarea"
         },
         {
           "id": "helpers",
-          "label": "People you'll ask to help facilitate (optional)",
+          "label": "People who'll help you out (optional)",
           "type": "textarea"
         }
       ]

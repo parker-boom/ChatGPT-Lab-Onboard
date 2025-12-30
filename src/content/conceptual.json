@@ -8,80 +8,77 @@
         "The Lab is designed to plug into the groups you already spend time with—whether that's your sorority or fraternity, consulting club, basketball team, or a cappella group.",
         "Instead of starting from scratch, it's best to invite the people you already know or co-host with a community you're part of. Familiar faces create better conversations."
       ],
-      "brainstormQuestion": "Where do you already spend time with people who are curious about AI—and who, specifically, would light up if invited to explore it together?",
+      "brainstormQuestion": "What group do you already spend time with that might be curious about AI?",
       "inputs": [
         {
           "id": "hostGroup",
-          "label": "Group you want to host with",
+          "label": "Community or group you'll host with",
           "type": "text"
         }
       ]
     },
     {
       "number": 2,
-      "title": "Select a theme",
+      "title": "Pick a theme",
       "description": [
-        "People are using ChatGPT for all sorts of things—studying, applying to jobs, cooking, working out, creativity, you name it!",
-        "Pick a theme that is relevant and exciting to the group you're gathering to help keep the conversation focused."
+        "People are using ChatGPT for all sorts of things—studying, applying to jobs, cooking, working out, creativity, you name it.",
+        "So it's best to pick a theme that's relevant and exciting to your group. It'll help keep the conversation focused."
       ],
-      "brainstormQuestion": "What shared goal, challenge, or curiosity around AI would feel most relevant to the group you're gathering?",
+      "brainstormQuestion": "What topic would get your group most excited to explore together?",
       "inputs": [
         {
           "id": "theme",
-          "label": "Theme of your event",
+          "label": "Theme for your event",
           "type": "text"
         }
       ]
     },
     {
       "number": 3,
-      "title": "Plan 5 show and tells",
+      "title": "Decide what you'll share",
       "description": [
-        "You should invite five people to each share a ChatGPT use case in quick succession, just five minutes per person.",
-        "Each presenter should demonstrate their use case on screen, not just describe it.",
-        "Five demos gives enough variety to spark ideas without overwhelming the audience.",
-        "Five is the minimum recommended number of guests, but you can scale up or repeat the format with larger audiences if there's appetite on your campus."
+        "This event is meant to share ideas from many students, so we recommend inviting others to share how they're using ChatGPT alongside you.",
+        "We've found that having at least 5 presenters works best. It's most effective if they actively show off how they use it in a live or interactive way—not just describe it.",
+        "Start thinking about who you might invite. You'll lock that in during logistical planning. For now, decide what _you'll_ share."
       ],
-      "brainstormQuestion": "What's one way you use ChatGPT that you would be excited to share with others and think they could benefit from?",
+      "brainstormQuestion": "How do you use ChatGPT in a way that others might find useful or surprising?",
       "inputs": [
         {
           "id": "yourUseCase",
-          "label": "Use case you will share",
+          "label": "ChatGPT use you'll share",
           "type": "text"
         }
       ]
     },
     {
       "number": 4,
-      "title": "Explore a guiding question",
+      "title": "Choose a guiding question",
       "description": [
-        "The event isn't just about learning new ways to use ChatGPT — it's also about thinking about the impact of these uses.",
-        "It's good to pair your theme with one juicy question—ideally after the demos—so people can reflect on what they just saw and turn it into clearer boundaries, better habits, and deeper curiosity."
+        "The event isn't just about learning new ways to use ChatGPT—it's also about thinking about the larger impacts of AI.",
+        "It's good to pair your theme with one deep question to pose after the demos, so people can reflect on what they just saw.",
+        "This could be tightly related to your theme so people leave with a holistic perspective, or it could be more general to just spark conversation."
       ],
-      "brainstormQuestion": "On your selected theme, what bigger questions do you have about the implications of AI?",
+      "brainstormQuestion": "What question about AI would you want your group thinking about after they leave?",
       "inputs": [
         {
           "id": "guidingQuestion",
-          "label": "One guiding question for the group",
+          "label": "Guiding question for your group",
           "type": "text"
         }
       ]
     },
     {
       "number": 5,
-      "title": "Choose how you will share",
+      "title": "Plan how you'll capture it",
       "description": [
-        "ChatGPT Lab is a communal learning experiment across college campuses, and we love sharing what's being learned from campus to campus across the map.",
-        "We invite you to capture your event and share it back with us as a report, including links to the five chats from your presenters.",
-        "If you want to take a group selfie, we'd love to see your faces too.",
-        "We'll share highlights via our newsletter and social channels once a month so we can continue learning, together.",
-        "This can be a great way to get broader recognition for the work you do."
+        "Your event will be one of many happening across the country. We want to highlight what you've done and share it with the broader Lab community so everyone can learn from each other.",
+        "The best way to do this is to take a group selfie, snap a few candid shots, or even record parts of it. This can be a great way to get recognition for what you're building on your campus—we might even share your work on OpenAI's social channels."
       ],
-      "brainstormQuestion": "What is the best way to capture my event and share it back with the OpenAI team?",
+      "brainstormQuestion": "How might you document the event so you can share it afterward?",
       "inputs": [
         {
           "id": "sharingPlan",
-          "label": "Plan for capturing a moment or report from the event",
+          "label": "Your plan for capturing the event",
           "type": "textarea"
         }
       ]

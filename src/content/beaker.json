@@ -1,32 +1,33 @@
 {
   "transitions": {
     "afterConceptual": {
-      "title": "Nice — you've got the idea.",
+      "title": "Conceptual planning: done.",
       "dialogue": [
-        "Alright, you've got the _shape_ of your Lab. That's the fun part.",
-        "Next we'll lock in logistics: date, presenters, slides, promotion, day-of details.",
-        "This part might take a couple weeks in real life — totally fine. You can come back anytime and everything will still be here."
+        "Nice! You've got the shape of your Lab event. That's the fun part.",
+        "I've saved everything so far. Next up is logistical planning—locking in the actual details like date, presenters, slides, and promotion.",
+        "This part might take a few weeks to iron out in real life, and that's totally fine. Feel free to move through it, skip stuff, whatever. I'll be saving it all as we go so you can come back anytime."
       ],
       "ctaText": "Go to logistical planning"
     },
     "afterLogistics": {
       "title": "Phew. Planning complete.",
       "dialogue": [
-        "Okay… that was a lot.",
-        "But it was _way_ less chaotic than my last experiment, so we're good.",
-        "Next, we'll lay everything out in one clean planning doc you can download — and I'll give you a ChatGPT link so you can keep refining things with my buddy."
+        "Okay… that was a lot. But way less chaotic than my last experiment, so I'll call it a win.",
+        "Next up: we'll review everything one last time. If anything's changed or you left something blank, now's your chance to fill it in.",
+        "Once you're done, I'll give you a clean PDF and connect you with ChatGPT for anything else you need."
       ],
-      "ctaText": "Review & download"
+      "ctaText": "Review my event"
     },
     "outro": {
-      "title": "You're all set!",
+      "title": "You did it!",
       "dialogue": [
-        "Your plan is ready to go. Download a PDF to share with your team, or chat with ChatGPT to keep refining the details.",
-        "After your event, fill out the host form so the OpenAI team can credit you and share what you learned."
+        "Look at you—fully planned Lab event, ready to go. I'm genuinely proud.",
+        "Below you can download a PDF planning document or click to keep talking to ChatGPT about this. Whatever helps you get it across the finish line.",
+        "And remember: after your event, share back with the OpenAI team so we can highlight your work!"
       ],
       "pdfButtonText": "Download PDF",
       "chatButtonText": "Chat with ChatGPT",
-      "ctaText": "Finish planning"
+      "ctaText": "Finish & see what's next"
     }
   }
 }
