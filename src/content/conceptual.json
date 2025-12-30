@@ -48,11 +48,6 @@
           "id": "yourUseCase",
           "label": "Use case you will share",
           "type": "text"
-        },
-        {
-          "id": "potentialPresenters",
-          "label": "People you might ask to share too",
-          "type": "textarea"
         }
       ]
     },

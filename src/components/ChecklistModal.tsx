@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Modal } from './Modal';
 import { ChecklistItem as ChecklistItemType } from '@/lib/types';
 
@@ -31,16 +31,32 @@ export function ChecklistModal({
     setValues((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSave = () => {
-    onSave(values);
-  };
+  const requiredInputs = item.inputs.filter(input => !input.label.includes('optional'));
+  const allRequiredFilled = requiredInputs.length === 0 || requiredInputs.every(input => values[input.id]?.trim());
+
+  const handleSave = useCallback(() => {
+    if (allRequiredFilled) {
+      onSave(values);
+    }
+  }, [allRequiredFilled, onSave, values]);
 
   const handleSkip = () => {
     onSkip();
   };
 
-  const requiredInputs = item.inputs.filter(input => !input.label.includes('optional'));
-  const allRequiredFilled = requiredInputs.length === 0 || requiredInputs.every(input => values[input.id]?.trim());
+  // Handle Enter key to save
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSave();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, handleSave]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

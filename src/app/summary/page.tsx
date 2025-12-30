@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { EventData } from '@/lib/types';
 import { getEventData, setEventData, updateProgress } from '@/lib/storage';
@@ -85,23 +85,43 @@ export default function SummaryPage() {
   }, []);
 
   const handleChange = (
-    section: 'conceptual' | 'logistics',
+    section: 'conceptual' | 'logistics' | 'root',
     key: string,
     value: string
   ) => {
     if (!data) return;
-    const newData: EventData = {
-      ...data,
-      [section]: { ...data[section], [key]: value },
-    };
+    
+    let newData: EventData;
+    if (section === 'root') {
+      // Handle top-level fields like campus
+      newData = { ...data, [key]: value };
+    } else {
+      newData = {
+        ...data,
+        [section]: { ...data[section], [key]: value },
+      };
+    }
+    
     setData(newData);
     setEventData(newData);
   };
 
-  const handleContinue = () => {
+  const handleContinue = useCallback(() => {
     updateProgress({ currentPage: 'outro' });
     router.push('/outro');
-  };
+  }, [router]);
+
+  // Handle Enter key to continue
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleContinue();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleContinue]);
 
   if (!isLoaded || !data) {
     return null;
@@ -121,6 +141,12 @@ export default function SummaryPage() {
 
         <div className="card p-8 mb-8">
           <div className="space-y-6">
+            <Field
+              label="Campus"
+              value={data.campus}
+              onChange={(v) => handleChange('root', 'campus', v)}
+            />
+
             <div className="flex gap-4">
               <Field
                 label="Community"
@@ -166,24 +192,12 @@ export default function SummaryPage() {
               onChange={(v) => handleChange('conceptual', 'guidingQuestion', v)}
             />
 
-            <div className="flex gap-4">
-              <Field
-                label="Other Presenters"
-                value={data.conceptual.potentialPresenters}
-                onChange={(v) =>
-                  handleChange('conceptual', 'potentialPresenters', v)
-                }
-                multiline
-                half
-              />
-              <Field
-                label="Promotion Plan"
-                value={data.logistics.promotionPlan}
-                onChange={(v) => handleChange('logistics', 'promotionPlan', v)}
-                multiline
-                half
-              />
-            </div>
+            <Field
+              label="Promotion Plan"
+              value={data.logistics.promotionPlan}
+              onChange={(v) => handleChange('logistics', 'promotionPlan', v)}
+              multiline
+            />
 
             <div className="flex gap-4">
               <Field

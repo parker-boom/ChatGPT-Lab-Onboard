@@ -44,6 +44,7 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
 export default function DonePage() {
   const router = useRouter();
   const [eventDateTime, setEventDateTime] = useState<string | null>(null);
+  const [campus, setCampus] = useState<string>('');
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -52,6 +53,7 @@ export default function DonePage() {
     const data = getEventData();
     const dateTime = data.logistics.eventDateTime;
     setEventDateTime(dateTime || null);
+    setCampus(data.campus || '');
 
     if (dateTime) {
       setTimeLeft(calculateTimeLeft(dateTime));
@@ -88,12 +90,20 @@ export default function DonePage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-8">
-      <div className="text-center max-w-2xl">
+      <div className="text-center max-w-3xl">
         {eventDateTime && timeLeft && !isPastEvent ? (
           <>
-            <h1 className="text-[3rem] font-black text-lab-black mb-10">
-              🚀 Your Lab is in
+            <h1 className="text-[3rem] font-black text-lab-black mb-3">
+              🚀 The Lab at
             </h1>
+            {campus && (
+              <p className="text-[2.5rem] font-black italic text-lab-yellow-600 mb-3">
+                {campus}
+              </p>
+            )}
+            <p className="text-[1.5rem] text-lab-gray-600 mb-10">
+              kicks off in
+            </p>
 
             <div className="flex gap-6 justify-center mb-14">
               <CountdownUnit value={timeLeft.days} label="Days" />
@@ -104,14 +114,18 @@ export default function DonePage() {
           </>
         ) : isPastEvent ? (
           <>
-            <h1 className="text-[3rem] font-black text-lab-black mb-4">
-              🎉 Hope it went great!
+            <h1 className="text-[3rem] font-black text-lab-black mb-3">
+              🎉 Hope the Lab{campus ? ' at' : ''} 
             </h1>
+            {campus && (
+              <p className="text-[2.5rem] font-black italic text-lab-yellow-600 mb-3">
+                {campus}
+              </p>
+            )}
             <p className="text-[1.25rem] text-lab-gray-600 mb-10">
-              Your event was scheduled for{' '}
+              went great! Your event was on{' '}
               {eventDate?.toLocaleDateString('en-US', {
                 weekday: 'long',
-                year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })}
@@ -120,9 +134,14 @@ export default function DonePage() {
           </>
         ) : (
           <>
-            <h1 className="text-[3rem] font-black text-lab-black mb-4">
-              ✨ You&apos;re all set!
+            <h1 className="text-[3rem] font-black text-lab-black mb-3">
+              ✨ You&apos;re all set{campus ? ',' : '!'}
             </h1>
+            {campus && (
+              <p className="text-[2.5rem] font-black italic text-lab-yellow-600 mb-3">
+                {campus}
+              </p>
+            )}
             <p className="text-[1.25rem] text-lab-gray-600 mb-10">
               Add a date to your plan to see the countdown to your event.
             </p>

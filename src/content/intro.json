@@ -32,7 +32,18 @@
         "2) **Logistical planning** — lock in the details so you can actually host it.",
         "3) **Summary** — we'll generate a clean planning doc and a ChatGPT link so you can keep working on it.",
         "Ready? Let's make a Lab worth showing up to."
+      ]
+    },
+    {
+      "title": "Oh, one last thing!",
+      "dialogue": [
+        "Which campus are you at? This helps me keep track of things and will make the process a bit smoother for both of us."
       ],
+      "input": {
+        "id": "campus",
+        "label": "Your campus or school name",
+        "placeholder": "e.g., Stanford University"
+      },
       "ctaText": "Start planning"
     }
   ]

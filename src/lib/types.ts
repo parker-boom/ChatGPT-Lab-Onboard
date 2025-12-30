@@ -59,7 +59,6 @@ export interface ConceptualData {
   theme: string;
   // Item 3: Plan 5 show and tells
   yourUseCase: string;
-  potentialPresenters: string;
   // Item 4: Explore a guiding question
   guidingQuestion: string;
   // Item 5: Choose how you will share
@@ -81,16 +80,19 @@ export interface LogisticsData {
 }
 
 export interface EventData {
+  // Top-level info collected during intro
+  campus: string;
+  // Stage-specific data
   conceptual: ConceptualData;
   logistics: LogisticsData;
 }
 
 export const DEFAULT_EVENT_DATA: EventData = {
+  campus: '',
   conceptual: {
     hostGroup: '',
     theme: '',
     yourUseCase: '',
-    potentialPresenters: '',
     guidingQuestion: '',
     sharingPlan: '',
   },
@@ -108,10 +110,17 @@ export const DEFAULT_EVENT_DATA: EventData = {
 // Content Types - for JSON content files
 // ============================================
 
+export interface IntroSlideInput {
+  id: string;
+  label: string;
+  placeholder?: string;
+}
+
 export interface IntroSlide {
   title: string;
   dialogue: string[];
   ctaText?: string;
+  input?: IntroSlideInput;
 }
 
 export interface ChecklistItemInput {

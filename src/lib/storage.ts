@@ -54,6 +54,7 @@ export function getEventData(): EventData {
     if (!stored) return DEFAULT_EVENT_DATA;
     const parsed = JSON.parse(stored);
     return {
+      campus: parsed.campus || DEFAULT_EVENT_DATA.campus,
       conceptual: { ...DEFAULT_EVENT_DATA.conceptual, ...parsed.conceptual },
       logistics: { ...DEFAULT_EVENT_DATA.logistics, ...parsed.logistics },
     };

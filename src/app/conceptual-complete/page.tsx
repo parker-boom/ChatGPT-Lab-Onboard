@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import beakerContent from '@/content/beaker.json';
 import { updateProgress } from '@/lib/storage';
@@ -10,14 +10,26 @@ export default function ConceptualCompletePage() {
   const router = useRouter();
   const transition = beakerContent.transitions.afterConceptual;
 
+  const handleContinue = useCallback(() => {
+    updateProgress({ currentPage: 'logistics' });
+    router.push('/logistics');
+  }, [router]);
+
   useEffect(() => {
     updateProgress({ currentPage: 'conceptual-complete' });
   }, []);
 
-  const handleContinue = () => {
-    updateProgress({ currentPage: 'logistics' });
-    router.push('/logistics');
-  };
+  // Handle Enter key to continue
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleContinue();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleContinue]);
 
   return (
     <main className="min-h-screen flex flex-col p-8">

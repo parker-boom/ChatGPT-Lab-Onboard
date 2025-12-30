@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import beakerContent from '@/content/beaker.json';
 import { updateProgress, getEventData } from '@/lib/storage';
@@ -10,14 +10,26 @@ export default function OutroPage() {
   const router = useRouter();
   const transition = beakerContent.transitions.outro;
 
+  const handleFinish = useCallback(() => {
+    updateProgress({ currentPage: 'done' });
+    router.push('/done');
+  }, [router]);
+
   useEffect(() => {
     updateProgress({ currentPage: 'outro' });
   }, []);
 
-  const handleFinish = () => {
-    updateProgress({ currentPage: 'done' });
-    router.push('/done');
-  };
+  // Handle Enter key to finish
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleFinish();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleFinish]);
 
   const handleDownloadPDF = () => {
     // PDF generation will be implemented in a future phase
@@ -28,12 +40,12 @@ export default function OutroPage() {
     const data = getEventData();
     const message = `Hey ChatGPT — I'm planning a ChatGPT Lab on my campus. Here are the details:
 
+Campus: ${data.campus || '[Not set]'}
 Community: ${data.conceptual.hostGroup || '[Not set]'}
 Theme: ${data.conceptual.theme || '[Not set]'}
 Date & Time: ${data.logistics.eventDateTime || '[Not set]'}
 Venue: ${data.logistics.venue || '[Not set]'}
 My Use Case: ${data.conceptual.yourUseCase || '[Not set]'}
-Other Presenters: ${data.conceptual.potentialPresenters || '[Not set]'}
 Guiding Question: ${data.conceptual.guidingQuestion || '[Not set]'}
 Promotion Plan: ${data.logistics.promotionPlan || '[Not set]'}
 Day-of Supplies: ${data.logistics.supplies || '[Not set]'}

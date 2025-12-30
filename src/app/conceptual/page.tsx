@@ -9,7 +9,6 @@ const INPUT_TO_FIELD_MAP: Record<string, string> = {
   hostGroup: 'hostGroup',
   theme: 'theme',
   yourUseCase: 'yourUseCase',
-  potentialPresenters: 'potentialPresenters',
   guidingQuestion: 'guidingQuestion',
   sharingPlan: 'sharingPlan',
 };
