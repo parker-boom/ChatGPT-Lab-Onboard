@@ -25,7 +25,7 @@ export default function IntroPage() {
   const slides = introContent.slides as IntroSlide[];
   const currentSlide = slides[slideIndex];
   const isLastSlide = slideIndex === slides.length - 1;
-  const beakerImageSrc = currentSlide.imageKey ? `/assets/${currentSlide.imageKey}` : undefined;
+  const beakerImageSrc = `/assets/${currentSlide.imageKey}`;
 
   // Preload all Beaker images on first page load
   usePreloadImages();

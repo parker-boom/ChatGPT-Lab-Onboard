@@ -4,12 +4,14 @@ import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import transitionsContent from '@/content/transitions.json';
 import { updateProgress, getEventData } from '@/lib/storage';
+import { downloadPlanPdf } from '@/lib/planPdf';
+import { buildChatGptPrompt } from '@/lib/planPrompt';
 import { BeakerLayout } from '@/components/BeakerLayout';
 
 export default function OutroPage() {
   const router = useRouter();
   const transition = transitionsContent.transitions.outro;
-  const beakerImageSrc = transition.imageKey ? `/assets/${transition.imageKey}` : undefined;
+  const beakerImageSrc = `/assets/${transition.imageKey}`;
 
   const handleFinish = useCallback(() => {
     updateProgress({ currentPage: 'done' });
@@ -36,33 +38,21 @@ export default function OutroPage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleFinish]);
 
-  const handleDownloadPDF = () => {
-    // PDF generation will be implemented in a future phase
-    alert('PDF download coming soon!');
+  const handleDownloadPDF = async () => {
+    try {
+      const data = getEventData();
+      await downloadPlanPdf(data);
+    } catch (error) {
+      console.error('Failed to generate PDF', error);
+      alert('Sorry, something went wrong while generating the PDF.');
+    }
   };
 
   const handleChatGPT = () => {
     const data = getEventData();
-    const message = `Hey ChatGPT — I'm planning a ChatGPT Lab on my campus. Here are the details:
-
-Campus: ${data.campus || '[Not set]'}
-Community: ${data.conceptual.hostGroup || '[Not set]'}
-Theme: ${data.conceptual.theme || '[Not set]'}
-Date & Time: ${data.logistics.eventDateTime || '[Not set]'}
-Venue: ${data.logistics.venue || '[Not set]'}
-My Use Case: ${data.conceptual.yourUseCase || '[Not set]'}
-Guiding Question: ${data.conceptual.guidingQuestion || '[Not set]'}
-Promotion Plan: ${data.logistics.promotionPlan || '[Not set]'}
-Day-of Supplies: ${data.logistics.supplies || '[Not set]'}
-Day-of Helpers: ${data.logistics.helpers || '[Not set]'}
-Post-Event Sharing Plan: ${data.conceptual.sharingPlan || '[Not set]'}
-
-1) Confirm you understand the plan.
-2) Summarize the plan in a few sentences.
-3) Be ready to help me refine anything: presenters, promo, run-of-show, discussion question, follow-up recap.`;
-
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://chat.openai.com/?q=${encodedMessage}`, '_blank');
+    const prompt = buildChatGptPrompt(data);
+    const encodedPrompt = encodeURIComponent(prompt);
+    window.open(`https://chatgpt.com/?prompt=${encodedPrompt}`, '_blank');
   };
 
   return (

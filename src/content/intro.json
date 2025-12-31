@@ -4,8 +4,8 @@
       "title": "Welcome!",
       "imageKey": "welcome.png",
       "dialogue": [
-        "I'm **Beaker**, the official ChatGPT Lab mascot and self-appointed event planner.",
-        "Looks like you're ready to host a Lab event on your campus—I'm excited to help you make it happen.",
+        "Nice to meet you! I'm **Beaker**, the official ChatGPT Lab mascot and self-appointed event planner.",
+        "Looks like you're ready to host a Lab event on your campus—I'm here to help you make it happen.",
         "I'll walk you through planning it step by step. Feel free to leave anytime; whenever you come back, your progress will be saved."
       ]
     },
@@ -15,7 +15,7 @@
       "dialogue": [
         "Quick reminder: you'll be hosting a **one-hour, peer-led show-and-tell** where students share how they're actually using AI.",
         "Your goal isn't to teach everyone AI—it's to have them leave with a few new ways to use it, plus the curiosity and confidence to try something new.",
-        "Feel free to get creative with it. I'll give you a structure, but the event is yours to shape."
+        "Feel free to get creative with your event. I'll give you a structure, but it's yours to shape."
       ]
     },
     {

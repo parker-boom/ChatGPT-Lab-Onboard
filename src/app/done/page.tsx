@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { updateProgress, getEventData } from '@/lib/storage';
+import { downloadPlanPdf } from '@/lib/planPdf';
+import { buildChatGptPrompt } from '@/lib/planPrompt';
 
 interface TimeLeft {
   days: number;
@@ -89,12 +91,30 @@ export default function DonePage() {
     router.push('/summary');
   };
 
+  const handleDownloadPDF = async () => {
+    try {
+      const data = getEventData();
+      await downloadPlanPdf(data);
+    } catch (error) {
+      console.error('Failed to generate PDF', error);
+      alert('Sorry, something went wrong while generating the PDF.');
+    }
+  };
+
+  const handleChatGPT = () => {
+    const data = getEventData();
+    const prompt = buildChatGptPrompt(data);
+    const encodedPrompt = encodeURIComponent(prompt);
+    window.open(`https://chatgpt.com/?prompt=${encodedPrompt}`, '_blank');
+  };
+
   if (!isLoaded) {
     return null;
   }
 
   const eventDate = eventDateTime ? new Date(eventDateTime) : null;
   const isPastEvent = eventDate && eventDate.getTime() < new Date().getTime();
+  const showPreEventActions = Boolean(eventDateTime && timeLeft && !isPastEvent);
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-8">
@@ -110,6 +130,32 @@ export default function DonePage() {
               <CountdownUnit value={timeLeft.hours} label="Hours" />
               <CountdownUnit value={timeLeft.minutes} label="Minutes" />
               <CountdownUnit value={timeLeft.seconds} label="Seconds" />
+            </div>
+
+            <div className="flex flex-col items-center gap-4 mb-12">
+              <span className="text-[0.85rem] font-semibold text-lab-gray-500 uppercase tracking-wide">
+                Planning tools
+              </span>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={handleDownloadPDF}
+                  className="flex items-center gap-2 px-6 py-3 bg-lab-white hover:bg-lab-gray-50 text-lab-black font-medium rounded-button shadow-card transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Download PDF
+                </button>
+                <button
+                  onClick={handleChatGPT}
+                  className="flex items-center gap-2 px-6 py-3 bg-lab-white hover:bg-lab-gray-50 text-lab-black font-medium rounded-button shadow-card transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  Chat with ChatGPT
+                </button>
+              </div>
             </div>
           </>
         ) : isPastEvent ? (
@@ -169,7 +215,13 @@ export default function DonePage() {
           </>
         )}
 
-        <div className="flex gap-3 justify-center">
+        <div className="flex flex-col items-center gap-4">
+          {showPreEventActions ? (
+            <span className="text-[0.85rem] font-semibold text-lab-gray-500 uppercase tracking-wide">
+              Plan controls
+            </span>
+          ) : null}
+          <div className="flex gap-3 justify-center">
           <button
             onClick={handleEditPlan}
             className="flex items-center gap-2 px-6 py-3 bg-lab-white hover:bg-lab-gray-50 text-lab-black font-medium rounded-button shadow-card transition-colors"
@@ -188,6 +240,7 @@ export default function DonePage() {
             </svg>
             Start over
           </button>
+          </div>
         </div>
       </div>
     </main>

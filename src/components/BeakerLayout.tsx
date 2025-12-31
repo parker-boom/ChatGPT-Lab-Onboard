@@ -13,8 +13,8 @@ interface BeakerLayoutProps {
   footer?: ReactNode;
   /** Optional action buttons rendered at the bottom of the speech card */
   actions?: ReactNode;
-  /** Path to the Beaker image (defaults to placeholder) */
-  imageSrc?: string;
+  /** Path to the Beaker image */
+  imageSrc: string;
 }
 
 /**
@@ -26,7 +26,7 @@ export function BeakerLayout({
   dialogue,
   footer,
   actions,
-  imageSrc = '/assets/SmileyFace.png',
+  imageSrc,
 }: BeakerLayoutProps) {
   return (
     <div className="flex gap-8 items-stretch">

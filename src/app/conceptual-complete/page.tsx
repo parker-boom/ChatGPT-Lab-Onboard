@@ -9,7 +9,7 @@ import { BeakerLayout } from '@/components/BeakerLayout';
 export default function ConceptualCompletePage() {
   const router = useRouter();
   const transition = transitionsContent.transitions.afterConceptual;
-  const beakerImageSrc = transition.imageKey ? `/assets/${transition.imageKey}` : undefined;
+  const beakerImageSrc = `/assets/${transition.imageKey}`;
 
   const handleContinue = useCallback(() => {
     updateProgress({ currentPage: 'logistics' });

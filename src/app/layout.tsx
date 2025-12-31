@@ -10,9 +10,36 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+const siteTitle = 'Host a ChatGPT Lab At Your Campus';
+const siteDescription =
+  'Plan a one-hour, peer-led ChatGPT Lab with a guided checklist, editable event plan, and downloadable artifacts. Built to help student hosts organize a great on-campus AI event.';
+
 export const metadata: Metadata = {
-  title: 'ChatGPT Lab - Host Guide',
-  description: 'Plan your ChatGPT Lab on Campus event',
+  title: siteTitle,
+  description: siteDescription,
+  icons: {
+    icon: '/assets/favicon.png',
+    shortcut: '/assets/favicon.png',
+    apple: '/assets/favicon.png',
+  },
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    images: [
+      {
+        url: '/assets/shareImage.png',
+        width: 1200,
+        height: 630,
+        alt: 'ChatGPT Lab event planning preview',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+    images: ['/assets/shareImage.png'],
+  },
 };
 
 export default function RootLayout({

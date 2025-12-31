@@ -19,7 +19,7 @@ const transitionImages = Object.values(transitionsContent.transitions || {})
   .map((key) => `/assets/${key}`);
 
 const BEAKER_IMAGES = Array.from(
-  new Set(['/assets/SmileyFace.png', ...introImages, ...transitionImages])
+  new Set([...introImages, ...transitionImages])
 );
 
 /**
