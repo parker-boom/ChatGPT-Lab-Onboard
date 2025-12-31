@@ -1,33 +1,38 @@
 # ChatGPT Lab Onboard
 
-A Next.js application built with TypeScript and Tailwind CSS.
+A friendly, guided planning tool for hosting a one-hour, peer-led ChatGPT Lab on campus. It walks hosts through conceptual and logistics checklists, saves progress locally, and generates a clean event plan PDF at the end. ✨
 
-## Getting Started
+## What’s inside (quick tour) 🧭
+- **App Router flow:** pages live in `src/app` with a simple intro → conceptual → logistics → summary → outro path.
+- **Content-driven copy:** checklist items and dialogue live in `src/content/*.json`.
+- **Local-first data:** progress + event data are stored in `localStorage` via `src/lib/storage.ts`.
+- **Reusable UI:** shared components in `src/components`, plus page transitions for a smooth feel.
+- **PDF export:** built client-side with `@react-pdf/renderer` in `src/lib/planPdf.tsx`.
+- **Assets:** images live in `public/assets` and are preloaded for faster transitions.
 
+## Run it locally 🚀
 Install dependencies:
 
 ```bash
 npm install
 ```
 
-Run the development server:
+Start the dev server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Scripts
+## Build for production 📦
+```bash
+npm run build
+npm run start
+```
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-
-## Tech Stack
-
-- [Next.js 14](https://nextjs.org/) - React framework
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-
+## Scripts 🧰
+- `npm run dev` – start dev server
+- `npm run build` – production build
+- `npm run start` – run the production server
+- `npm run lint` – lint the codebase

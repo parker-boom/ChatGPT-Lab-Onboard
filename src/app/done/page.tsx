@@ -105,7 +105,7 @@ export default function DonePage() {
     const data = getEventData();
     const prompt = buildChatGptPrompt(data);
     const encodedPrompt = encodeURIComponent(prompt);
-    window.open(`https://chatgpt.com/?prompt=${encodedPrompt}`, '_blank');
+    window.open(`https://chatgpt.com/?prompt=${encodedPrompt}`, '_blank', 'noopener,noreferrer');
   };
 
   if (!isLoaded) {
