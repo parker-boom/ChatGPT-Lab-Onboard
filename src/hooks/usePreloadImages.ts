@@ -35,16 +35,3 @@ export function usePreloadImages() {
   }, []);
 }
 
-/**
- * Preloads a specific set of images.
- * Useful for preloading page-specific images.
- */
-export function usePreloadCustomImages(imageSrcs: string[]) {
-  useEffect(() => {
-    imageSrcs.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, [imageSrcs]);
-}
-

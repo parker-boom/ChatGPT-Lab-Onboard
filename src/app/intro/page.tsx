@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import introContent from '@/content/intro.json';
 import { getProgress, updateProgress, getEventData, setEventData, isPageAfter } from '@/lib/storage';
 import { BeakerLayout } from '@/components/BeakerLayout';
-import { usePreloadImages } from '@/hooks/usePreloadImages';
 import { IntroSlide } from '@/lib/types';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -26,9 +25,6 @@ export default function IntroPage() {
   const currentSlide = slides[slideIndex];
   const isLastSlide = slideIndex === slides.length - 1;
   const beakerImageSrc = `/assets/${currentSlide.imageKey}`;
-
-  // Preload all Beaker images on first page load
-  usePreloadImages();
 
   // Handle Enter key to progress
   const handleNext = useCallback(() => {

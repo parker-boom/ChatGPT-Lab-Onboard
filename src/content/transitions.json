@@ -28,8 +28,8 @@
         "Below you can download a PDF planning document or click to keep talking to ChatGPT about this. Whatever helps you get it across the finish line.",
         "And remember: after your event, share back with the OpenAI team so we can highlight your work!"
       ],
-      "pdfButtonText": "Download PDF",
-      "chatButtonText": "Chat with ChatGPT",
+      "pdfButtonText": "Download Event Plan",
+      "chatButtonText": "Work with ChatGPT",
       "ctaText": "Finish & see what's next"
     }
   }

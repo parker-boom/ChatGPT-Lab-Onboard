@@ -23,7 +23,7 @@ export function ChecklistModal({
   onSkip 
 }: ChecklistModalProps) {
   const [values, setValues] = useState<Record<string, string>>(initialValues);
-  const firstFieldRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
+  const firstFieldRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setValues(initialValues);
@@ -67,6 +67,18 @@ export function ChecklistModal({
     const animationFrame = window.requestAnimationFrame(focusField);
     return () => window.cancelAnimationFrame(animationFrame);
   }, [isOpen, item.inputs.length]);
+
+  const firstInputId = item.inputs[0]?.id;
+  const setFirstInputRef = (element: HTMLInputElement | null) => {
+    if (firstInputId) {
+      firstFieldRef.current = element;
+    }
+  };
+  const setFirstTextareaRef = (element: HTMLTextAreaElement | null) => {
+    if (firstInputId) {
+      firstFieldRef.current = element;
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -130,7 +142,7 @@ export function ChecklistModal({
                   </label>
                   {input.type === 'textarea' ? (
                     <textarea
-                      ref={input.id === item.inputs[0]?.id ? firstFieldRef : undefined}
+                      ref={input.id === firstInputId ? setFirstTextareaRef : undefined}
                       value={values[input.id] || ''}
                       onChange={(e) => handleInputChange(input.id, e.target.value)}
                       placeholder="Type your answer..."
@@ -139,7 +151,7 @@ export function ChecklistModal({
                     />
                   ) : input.type === 'datetime' ? (
                     <input
-                      ref={input.id === item.inputs[0]?.id ? firstFieldRef : undefined}
+                      ref={input.id === firstInputId ? setFirstInputRef : undefined}
                       type="datetime-local"
                       value={values[input.id] || ''}
                       onChange={(e) => handleInputChange(input.id, e.target.value)}
@@ -147,7 +159,7 @@ export function ChecklistModal({
                     />
                   ) : (
                     <input
-                      ref={input.id === item.inputs[0]?.id ? firstFieldRef : undefined}
+                      ref={input.id === firstInputId ? setFirstInputRef : undefined}
                       type="text"
                       value={values[input.id] || ''}
                       onChange={(e) => handleInputChange(input.id, e.target.value)}

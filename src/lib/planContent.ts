@@ -116,17 +116,17 @@ export function buildPlanContent(data: EventData): PlanContent {
         paragraphs: [
           [
             {
-              text: "To keep the experience organized and flowing, I will use a simple slideshow. We will open with a quick explanation of what a ChatGPT Lab is, then move into show-and-tells. Each presenter will interactively show a creative way they are using ChatGPT.",
+              text: 'To keep the experience organized and flowing, a simple slideshow will be used. The event begins with a quick explanation of what a ChatGPT Lab is, then moves into show-and-tells. Each presenter will interactively demonstrate a creative way they use ChatGPT, ideally with a live walkthrough.',
             },
           ],
           [
             {
-              text: "After the show-and-tells, we'll give people a few minutes to share their own use cases or talk with a neighbor about what stood out. Then we'll open a broader discussion about AI and its impact with a guiding question.",
+              text: 'After the show-and-tells, attendees will have a few minutes to share their own use cases or reflect with a neighbor on what stood out. The event then opens into a broader discussion about AI and its impact using a guiding question.',
             },
           ],
           [
             {
-              text: "To end the event, I'll poll the room about whether they found a new way to use ChatGPT and collect emails so this community can keep exploring in the future.",
+              text: 'To close the event, the group will be asked whether they discovered a new way to use ChatGPT, and optional contact information can be collected so the community can keep exploring together.',
             },
           ],
         ],
@@ -150,7 +150,7 @@ export function buildPlanContent(data: EventData): PlanContent {
           {
             title: 'Promotion',
             paragraphs: [
-              [{ text: "I'll focus on targeted, personal outreach to bring the right group together." }],
+              [{ text: 'Promotion focuses on targeted, personal outreach to bring the right group together.' }],
             ],
             details: [{ label: 'Promotion plan', value: promotionPlan }],
           },
@@ -167,7 +167,7 @@ export function buildPlanContent(data: EventData): PlanContent {
             paragraphs: [
               [
                 {
-                  text: "I'll share highlights back to the Lab community and OpenAI so others can learn from the event. I'll post in the host community channels (e.g., Slack), and share any standout moments or photos for social media highlights and the monthly recap.",
+                  text: 'Highlights can be shared back with the Lab community and OpenAI so others can learn from the event. Host community channels (e.g., Slack) are a good place to post, along with standout moments or photos for social highlights and monthly recaps.',
                 },
               ],
             ],
