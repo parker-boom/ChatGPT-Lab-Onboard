@@ -84,6 +84,10 @@ export default function SummaryPage() {
     setIsLoaded(true);
   }, []);
 
+  useEffect(() => {
+    router.prefetch('/outro');
+  }, [router]);
+
   const handleChange = (
     section: 'conceptual' | 'logistics' | 'root',
     key: string,

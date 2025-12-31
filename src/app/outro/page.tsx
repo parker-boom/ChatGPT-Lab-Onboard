@@ -9,6 +9,7 @@ import { BeakerLayout } from '@/components/BeakerLayout';
 export default function OutroPage() {
   const router = useRouter();
   const transition = transitionsContent.transitions.outro;
+  const beakerImageSrc = transition.imageKey ? `/assets/${transition.imageKey}` : undefined;
 
   const handleFinish = useCallback(() => {
     updateProgress({ currentPage: 'done' });
@@ -18,6 +19,10 @@ export default function OutroPage() {
   useEffect(() => {
     updateProgress({ currentPage: 'outro' });
   }, []);
+
+  useEffect(() => {
+    router.prefetch('/done');
+  }, [router]);
 
   // Handle Enter key to finish
   useEffect(() => {
@@ -66,6 +71,7 @@ Post-Event Sharing Plan: ${data.conceptual.sharingPlan || '[Not set]'}
         <BeakerLayout
           title={transition.title}
           dialogue={transition.dialogue}
+          imageSrc={beakerImageSrc}
           actions={
             <div className="flex gap-3">
               <button

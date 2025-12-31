@@ -123,6 +123,7 @@ export interface IntroSlide {
   title: string;
   dialogue: string[];
   ctaText?: string;
+  imageKey?: string;
   input?: IntroSlideInput;
   inputs?: IntroSlideInput[];
 }
@@ -149,4 +150,5 @@ export interface BeakerTransition {
   title: string;
   dialogue: string[];
   ctaText: string;
+  imageKey?: string;
 }

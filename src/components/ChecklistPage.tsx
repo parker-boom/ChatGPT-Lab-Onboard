@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChecklistItem } from './ChecklistItem';
 import { ChecklistModal } from './ChecklistModal';
@@ -72,6 +72,10 @@ export function ChecklistPage({
     setIsLoaded(true);
   }, [stage]);
 
+  useEffect(() => {
+    router.prefetch(nextRoute);
+  }, [nextRoute, router]);
+
   const handleItemClick = (index: number) => {
     setOpenModalIndex(index);
   };
@@ -120,12 +124,31 @@ export function ChecklistPage({
     setOpenModalIndex(null);
   };
 
-  const handleMoveOn = () => {
+  const handleMoveOn = useCallback(() => {
     updateProgress({ currentPage: nextPage });
     router.push(nextRoute);
-  };
+  }, [nextPage, nextRoute, router]);
 
   const allComplete = isChecklistComplete(stage);
+  const nextIncompleteIndex = checklist
+    ? items.findIndex((item) => checklist[ITEM_KEY_MAP[item.number]] === 'pending')
+    : -1;
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Enter') return;
+      if (openModalIndex !== null) return;
+      e.preventDefault();
+      if (allComplete || nextIncompleteIndex === -1) {
+        handleMoveOn();
+        return;
+      }
+      setOpenModalIndex(nextIncompleteIndex);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [allComplete, handleMoveOn, isLoaded, nextIncompleteIndex, openModalIndex]);
 
   if (!isLoaded || !checklist || !stageData) {
     return null;
@@ -160,13 +183,35 @@ export function ChecklistPage({
         {/* Checklist */}
         <div className="space-y-4 mb-12">
           {items.map((item, index) => (
-            <ChecklistItem
-              key={item.number}
-              number={item.number}
-              title={item.title}
-              status={checklist[ITEM_KEY_MAP[item.number]]}
-              onClick={() => handleItemClick(index)}
-            />
+            <div key={item.number} className="relative">
+              {index === nextIncompleteIndex && (
+                <div
+                  className="absolute -left-10 top-1/2 -translate-y-1/2 pointer-events-none"
+                  style={{ filter: 'drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35))' }}
+                >
+                  <svg
+                    className="w-9 h-9"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M5 12h12m0 0-4-4m4 4-4 4"
+                      stroke="white"
+                      strokeWidth={2.5}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              )}
+              <ChecklistItem
+                number={item.number}
+                title={item.title}
+                status={checklist[ITEM_KEY_MAP[item.number]]}
+                onClick={() => handleItemClick(index)}
+              />
+            </div>
           ))}
         </div>
 

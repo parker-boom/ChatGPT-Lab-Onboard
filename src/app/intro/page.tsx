@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import introContent from '@/content/intro.json';
 import { getProgress, updateProgress, getEventData, setEventData, isPageAfter } from '@/lib/storage';
 import { BeakerLayout } from '@/components/BeakerLayout';
 import { usePreloadImages } from '@/hooks/usePreloadImages';
 import { IntroSlide } from '@/lib/types';
+import { AnimatePresence, motion } from 'framer-motion';
 
 type IntroRootField = 'campus';
 
@@ -19,10 +20,12 @@ export default function IntroPage() {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [introValues, setIntroValues] = useState<Record<string, string>>({});
+  const isFirstSlideRender = useRef(true);
 
   const slides = introContent.slides as IntroSlide[];
   const currentSlide = slides[slideIndex];
   const isLastSlide = slideIndex === slides.length - 1;
+  const beakerImageSrc = currentSlide.imageKey ? `/assets/${currentSlide.imageKey}` : undefined;
 
   // Preload all Beaker images on first page load
   usePreloadImages();
@@ -47,6 +50,14 @@ export default function IntroPage() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNext]);
+
+  useEffect(() => {
+    isFirstSlideRender.current = false;
+  }, []);
+
+  useEffect(() => {
+    router.prefetch('/conceptual');
+  }, [router]);
 
   // Load saved slide index and intro input values on mount
   useEffect(() => {
@@ -118,11 +129,22 @@ export default function IntroPage() {
     <main className="min-h-screen flex flex-col p-8">
       {/* Main content - centered */}
       <div className="flex-1 flex items-center justify-center">
-        <BeakerLayout
-          title={currentSlide.title}
-          dialogue={currentSlide.dialogue}
-          footer={inputContent}
-        />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={slideIndex}
+            initial={isFirstSlideRender.current ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+          >
+            <BeakerLayout
+              title={currentSlide.title}
+              dialogue={currentSlide.dialogue}
+              footer={inputContent}
+              imageSrc={beakerImageSrc}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Bottom navigation - fixed at bottom */}

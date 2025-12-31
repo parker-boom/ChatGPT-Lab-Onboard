@@ -1,18 +1,26 @@
 'use client';
 
 import { useEffect } from 'react';
+import introContent from '@/content/intro.json';
+import transitionsContent from '@/content/transitions.json';
 
 /**
  * List of Beaker images to preload.
  * Add new image paths here as they're created.
  */
-const BEAKER_IMAGES = [
-  '/assets/SmileyFace.png',
-  // Future Beaker images will be added here:
-  // '/assets/BeakerIntro.png',
-  // '/assets/BeakerCelebrate.png',
-  // etc.
-];
+const introImages = (introContent.slides || [])
+  .map((slide: { imageKey?: string }) => slide.imageKey)
+  .filter(Boolean)
+  .map((key) => `/assets/${key}`);
+
+const transitionImages = Object.values(transitionsContent.transitions || {})
+  .map((transition: { imageKey?: string }) => transition.imageKey)
+  .filter(Boolean)
+  .map((key) => `/assets/${key}`);
+
+const BEAKER_IMAGES = Array.from(
+  new Set(['/assets/SmileyFace.png', ...introImages, ...transitionImages])
+);
 
 /**
  * Preloads Beaker images on mount to prevent loading flashes

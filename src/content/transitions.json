@@ -2,6 +2,7 @@
   "transitions": {
     "afterConceptual": {
       "title": "Conceptual planning: done.",
+      "imageKey": "conceptualDone.png",
       "dialogue": [
         "Nice! You've got the shape of your Lab event. That's the fun part.",
         "I've saved everything so far. Next up is logistical planning—locking in the actual details like date, presenters, slides, and promotion.",
@@ -11,6 +12,7 @@
     },
     "afterLogistics": {
       "title": "Phew. Planning complete.",
+      "imageKey": "planningDone.png",
       "dialogue": [
         "Okay… that was a lot. But way less chaotic than my last experiment, so I'll call it a win.",
         "Next up: we'll review everything one last time. If anything's changed or you left something blank, now's your chance to fill it in.",
@@ -20,6 +22,7 @@
     },
     "outro": {
       "title": "You did it!",
+      "imageKey": "youDidIt.png",
       "dialogue": [
         "Look at you—fully planned Lab event, ready to go. I'm genuinely proud.",
         "Below you can download a PDF planning document or click to keep talking to ChatGPT about this. Whatever helps you get it across the finish line.",

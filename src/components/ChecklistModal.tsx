@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Modal } from './Modal';
 import { ChecklistItem as ChecklistItemType } from '@/lib/types';
+import { parseBeakerMarkdown } from '@/lib/utils';
 
 interface ChecklistModalProps {
   isOpen: boolean;
@@ -85,14 +86,21 @@ export function ChecklistModal({
         <div className="flex-1 overflow-y-auto px-8 py-6">
           <div className="space-y-3 mb-6">
             {item.description.map((paragraph, i) => (
-              <p key={i} className="text-body-sm text-lab-gray-600 leading-relaxed">{paragraph}</p>
+              <p
+                key={i}
+                className="text-body-sm text-lab-gray-600 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: parseBeakerMarkdown(paragraph) }}
+              />
             ))}
           </div>
 
           {item.brainstormQuestion && (
             <div className="bg-lab-yellow-100 border border-lab-yellow-300 rounded-card p-5 mb-6">
               <div className="text-caption font-semibold text-lab-gray-700 mb-1">💡 Think about</div>
-              <p className="text-body-sm text-lab-black">{item.brainstormQuestion}</p>
+              <p
+                className="text-body-sm text-lab-black"
+                dangerouslySetInnerHTML={{ __html: parseBeakerMarkdown(item.brainstormQuestion) }}
+              />
             </div>
           )}
 

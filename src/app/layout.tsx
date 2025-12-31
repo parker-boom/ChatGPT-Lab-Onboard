@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { PreloadAssets } from '@/components/PreloadAssets';
+import { PageTransition } from '@/components/PageTransition';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -21,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className={`${inter.className} antialiased`}>
+        <PreloadAssets />
         {/* Background layer */}
         <div 
           className="fixed inset-0 -z-10"
@@ -50,7 +53,7 @@ export default function RootLayout({
         
         {/* Main content - hidden on mobile */}
         <div className="hidden lg:block min-h-screen">
-          {children}
+          <PageTransition>{children}</PageTransition>
         </div>
       </body>
     </html>

@@ -11,6 +11,9 @@ interface TimeLeft {
   seconds: number;
 }
 
+const HOST_REPORT_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSdl-1W61FxgUDiATQzo80xvhbpCPfv18Y8EjzpJzfOjwp6FPQ/viewform';
+
 function calculateTimeLeft(eventDate: string): TimeLeft | null {
   const difference = new Date(eventDate).getTime() - new Date().getTime();
 
@@ -62,6 +65,11 @@ export default function DonePage() {
   }, []);
 
   useEffect(() => {
+    router.prefetch('/summary');
+    router.prefetch('/intro');
+  }, [router]);
+
+  useEffect(() => {
     if (!eventDateTime) return;
 
     const timer = setInterval(() => {
@@ -93,17 +101,9 @@ export default function DonePage() {
       <div className="text-center max-w-3xl">
         {eventDateTime && timeLeft && !isPastEvent ? (
           <>
-            <h1 className="text-[3rem] font-black text-lab-black mb-3">
-              🚀 The Lab at
+            <h1 className="text-[3rem] font-black text-lab-black mb-10">
+              🚀 {campus ? `${campus}'s Lab Is In:` : 'Your Lab Is In:'}
             </h1>
-            {campus && (
-              <p className="text-[2.5rem] font-black italic text-lab-yellow-600 mb-3">
-                {campus}
-              </p>
-            )}
-            <p className="text-[1.5rem] text-lab-gray-600 mb-10">
-              kicks off in
-            </p>
 
             <div className="flex gap-6 justify-center mb-14">
               <CountdownUnit value={timeLeft.days} label="Days" />
@@ -115,33 +115,54 @@ export default function DonePage() {
         ) : isPastEvent ? (
           <>
             <h1 className="text-[3rem] font-black text-lab-black mb-3">
-              🎉 Hope the Lab{campus ? ' at' : ''} 
+              🎉 Your Lab is complete
             </h1>
-            {campus && (
-              <p className="text-[2.5rem] font-black italic text-lab-yellow-600 mb-3">
-                {campus}
-              </p>
-            )}
-            <p className="text-[1.25rem] text-lab-gray-600 mb-10">
-              went great! Your event was on{' '}
+            <p className="text-[1.25rem] text-lab-gray-600 mb-8">
+              Your event was on{' '}
               {eventDate?.toLocaleDateString('en-US', {
                 weekday: 'long',
                 month: 'long',
                 day: 'numeric',
               })}
-              . Don&apos;t forget to fill out the host form!
+              . Thanks for hosting!
             </p>
+
+            <div className="grid gap-6 mb-12 text-left">
+              <div className="card p-6">
+                <h2 className="text-[1.4rem] font-bold text-lab-black mb-2">
+                  Report your event back
+                </h2>
+                <p className="text-body-sm text-lab-gray-600 mb-4">
+                  Please fill out the host report form so we can credit your work and share what
+                  you learned with the Lab community.
+                </p>
+                <a
+                  href={HOST_REPORT_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-primary inline-flex items-center justify-center gap-2"
+                >
+                  Submit the host report
+                </a>
+              </div>
+
+              <div className="card p-6">
+                <h2 className="text-[1.4rem] font-bold text-lab-black mb-2">
+                  Good next steps
+                </h2>
+                <ul className="text-body-sm text-lab-gray-700 list-disc list-inside space-y-2">
+                  <li>Post in the Slack about how it went</li>
+                  <li>Email participants to thank them and ask if they want another Lab</li>
+                  <li>Post on LinkedIn and tag ChatGPT for Education</li>
+                </ul>
+              </div>
+            </div>
           </>
         ) : (
           <>
-            <h1 className="text-[3rem] font-black text-lab-black mb-3">
-              ✨ You&apos;re all set{campus ? ',' : '!'}
+            <h1 className="text-[3rem] font-black text-lab-black mb-10">
+              🚀 Your Lab Is In:
             </h1>
-            {campus && (
-              <p className="text-[2.5rem] font-black italic text-lab-yellow-600 mb-3">
-                {campus}
-              </p>
-            )}
             <p className="text-[1.25rem] text-lab-gray-600 mb-10">
               Add a date to your plan to see the countdown to your event.
             </p>

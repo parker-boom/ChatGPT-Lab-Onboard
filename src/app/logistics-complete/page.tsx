@@ -9,6 +9,7 @@ import { BeakerLayout } from '@/components/BeakerLayout';
 export default function LogisticsCompletePage() {
   const router = useRouter();
   const transition = transitionsContent.transitions.afterLogistics;
+  const beakerImageSrc = transition.imageKey ? `/assets/${transition.imageKey}` : undefined;
 
   const handleContinue = useCallback(() => {
     updateProgress({ currentPage: 'summary' });
@@ -18,6 +19,10 @@ export default function LogisticsCompletePage() {
   useEffect(() => {
     updateProgress({ currentPage: 'logistics-complete' });
   }, []);
+
+  useEffect(() => {
+    router.prefetch('/summary');
+  }, [router]);
 
   // Handle Enter key to continue
   useEffect(() => {
@@ -37,14 +42,7 @@ export default function LogisticsCompletePage() {
         <BeakerLayout
           title={transition.title}
           dialogue={transition.dialogue}
-          footer={
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-lab-green/10 text-lab-green rounded-full">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-[1rem] font-medium text-lab-green/90">Stage 2 complete</span>
-            </div>
-          }
+          imageSrc={beakerImageSrc}
         />
       </div>
 

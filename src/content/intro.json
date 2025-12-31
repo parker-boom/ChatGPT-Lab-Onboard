@@ -2,6 +2,7 @@
   "slides": [
     {
       "title": "Welcome!",
+      "imageKey": "welcome.png",
       "dialogue": [
         "I'm **Beaker**, the official ChatGPT Lab mascot and self-appointed event planner.",
         "Looks like you're ready to host a Lab event on your campus—I'm excited to help you make it happen.",
@@ -10,6 +11,7 @@
     },
     {
       "title": "What's a ChatGPT Lab?",
+      "imageKey": "whatIsLab.png",
       "dialogue": [
         "Quick reminder: you'll be hosting a **one-hour, peer-led show-and-tell** where students share how they're actually using AI.",
         "Your goal isn't to teach everyone AI—it's to have them leave with a few new ways to use it, plus the curiosity and confidence to try something new.",
@@ -18,6 +20,7 @@
     },
     {
       "title": "Here's how we'll support you",
+      "imageKey": "support.png",
       "dialogue": [
         "I've convinced OpenAI to send you some **100 Chats books**—they're great for sparking conversation.",
         "You'll also join a community of students hosting Labs at their own campuses. You can swap ideas, learn what's working, and steal shamelessly from each other.",
@@ -26,6 +29,7 @@
     },
     {
       "title": "Here's the plan",
+      "imageKey": "thePlan.png",
       "dialogue": [
         "We'll do this in two parts:",
         "**Conceptual planning** — you'll brainstorm what your event will actually focus on.",
@@ -35,6 +39,7 @@
     },
     {
       "title": "One last thing",
+      "imageKey": "oneLast.png",
       "dialogue": [
         "Oh yeah—I almost forgot. What campus are you at?",
         "This helps both of us stay organized. You'll be able to keep track of your plan, and I'll know where to send good vibes."
