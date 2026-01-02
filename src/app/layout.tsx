@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { PreloadAssets } from '@/components/PreloadAssets';
 import { PageTransition } from '@/components/PageTransition';
+import { PreloadGate } from '@/components/PreloadGate';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -13,10 +13,12 @@ const inter = Inter({
 const siteTitle = 'Host a ChatGPT Lab At Your Campus';
 const siteDescription =
   'Plan a one-hour, peer-led ChatGPT Lab with a guided checklist, editable event plan, and downloadable artifacts. Built to help student hosts organize a great on-campus AI event.';
+const siteUrl = 'https://hostastudentlab.com';
 
 export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
+  metadataBase: new URL(siteUrl),
   icons: {
     icon: '/assets/favicon.png',
     shortcut: '/assets/favicon.png',
@@ -50,7 +52,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className={`${inter.className} antialiased`}>
-        <PreloadAssets />
         {/* Background layer */}
         <div 
           className="fixed inset-0 -z-10"
@@ -80,7 +81,9 @@ export default function RootLayout({
         
         {/* Main content - hidden on mobile */}
         <div className="hidden lg:block min-h-screen">
-          <PageTransition>{children}</PageTransition>
+          <PreloadGate>
+            <PageTransition>{children}</PageTransition>
+          </PreloadGate>
         </div>
       </body>
     </html>

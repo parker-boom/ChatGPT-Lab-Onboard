@@ -39,6 +39,7 @@ export function BeakerLayout({
           height={460}
           className="w-full h-full object-cover"
           priority
+          unoptimized
         />
       </div>
 
