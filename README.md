@@ -1,38 +1,29 @@
 # ChatGPT Lab Onboard
 
-A friendly, guided planning tool for hosting a one-hour, peer-led ChatGPT Lab on campus. It walks hosts through conceptual and logistics checklists, saves progress locally, and generates a clean event plan PDF at the end. ✨
+A guided planning tool that helps students prepare and host a one-hour, peer-led ChatGPT workshop on campus. I built it as part of my application to work in student community at OpenAI.
 
-## What’s inside (quick tour) 🧭
-- **App Router flow:** pages live in `src/app` with a simple intro → conceptual → logistics → summary → outro path.
-- **Content-driven copy:** checklist items and dialogue live in `src/content/*.json`.
-- **Local-first data:** progress + event data are stored in `localStorage` via `src/lib/storage.ts`.
-- **Reusable UI:** shared components in `src/components`, plus page transitions for a smooth feel.
-- **PDF export:** built client-side with `@react-pdf/renderer` in `src/lib/planPdf.tsx`.
-- **Assets:** images live in `public/assets` and are preloaded for faster transitions.
+## About the project
 
-## Run it locally 🚀
-Install dependencies:
+Hosting a workshop involves more than knowing the tool. This walks students through what they want people to learn, the practical details of running the event, and a final plan they can take with them.
 
-```bash
+- Work through guided conceptual and logistics checklists.
+- Return to a saved plan in the same browser.
+- Export an event plan as a PDF.
+
+## Built with
+
+- **Next.js, TypeScript, and Tailwind CSS** for the interface, with App Router pages following the planning sequence from introduction to summary.
+- **JSON-driven content** separates checklist items and dialogue from the page components, making workshop copy easier to revise.
+
+## Links
+
+[Try the planner](https://hostastudentlab.com/intro)
+
+## Run locally
+
+```sh
 npm install
-```
-
-Start the dev server:
-
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-## Build for production 📦
-```bash
-npm run build
-npm run start
-```
-
-## Scripts 🧰
-- `npm run dev` – start dev server
-- `npm run build` – production build
-- `npm run start` – run the production server
-- `npm run lint` – lint the codebase
+Open `http://localhost:3000`. For a production build, run `npm run build`, then `npm run start`.
